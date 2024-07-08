@@ -1,10 +1,10 @@
-
-import SideBar from "./components/sidebar";
+import InvoicePage from "@/components/invoice-dashboard/invoice-page";
 
 export default function Home() {
   return (
     <div>
-    Home page
+    <InvoicePage/>
+    {/* Please correct the routing later */}
     </div>
   );
 }
