@@ -1,17 +1,4 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+"use client"
 import Image from "next/image";
 const products = [
   {
@@ -19,7 +6,7 @@ const products = [
     name: "Basic Tee",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
@@ -29,7 +16,7 @@ const products = [
     name: "Casual Shirt",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/araliya.jpg",
     imageAlt: "Front of men's Casual Shirt in black.",
     price: "$45",
     color: "Black",
@@ -39,7 +26,7 @@ const products = [
     name: "Sporty Jacket",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Sporty Jacket in black.",
     price: "$75",
     color: "Black",
@@ -49,7 +36,7 @@ const products = [
     name: "Slim Fit Jeans",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Slim Fit Jeans in black.",
     price: "$55",
     color: "Black",
@@ -59,7 +46,7 @@ const products = [
     name: "Formal Trousers",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Formal Trousers in black.",
     price: "$60",
     color: "Black",
@@ -69,7 +56,7 @@ const products = [
     name: "Classic Blazer",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Classic Blazer in black.",
     price: "$120",
     color: "Black",
@@ -79,7 +66,7 @@ const products = [
     name: "Cotton Shorts",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Cotton Shorts in black.",
     price: "$25",
     color: "Black",
@@ -89,7 +76,7 @@ const products = [
     name: "Polo T-shirt",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Polo T-shirt in black.",
     price: "$30",
     color: "Black",
@@ -99,7 +86,7 @@ const products = [
     name: "Leather Belt",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Leather Belt in black.",
     price: "$40",
     color: "Black",
@@ -109,7 +96,7 @@ const products = [
     name: "Sneakers",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "/assets/hiru.jpg",
     imageAlt: "Front of men's Sneakers in black.",
     price: "$80",
     color: "Black",
@@ -118,20 +105,23 @@ const products = [
 
 export default function ItemList() {
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+    <div className="bg-white ">
+      <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 ">
          Items
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
             <div key={product.id} className="group relative">
-              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                <img
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 min-h-6">
+               
+                <Image
                   alt={product.imageAlt}
                   src={product.imageSrc}
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  layout="responsive"
+                  width={1000}
+                  height={1000}
                 />
               </div>
               <div className="mt-4 flex justify-between">
