@@ -31,7 +31,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   onConfirm,
 }) => {
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md w-full">
+    <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {items.map((item) => (
         <div key={item.id} className="flex items-center justify-between border-b border-gray-200 py-4">
@@ -94,7 +94,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       </div>
       <button
         onClick={onConfirm}
-        className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+        className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         Confirm order
       </button>
