@@ -94,7 +94,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       </div>
       <button
         onClick={onConfirm}
-        className="w-full mt-6 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+        className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
       >
         Confirm order
       </button>
