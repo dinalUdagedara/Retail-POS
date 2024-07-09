@@ -6,13 +6,26 @@ const PrintBill = () => {
   let subtotal = 0;
   let total = 0;
   let discount = 0.1;
+
+  const handlePrint = () => {
+    const printableArea = document.getElementById("printable-area");
+    if (printableArea) {
+      const printContents = printableArea.innerHTML;
+      const originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // This line is to reload the page to its original state after printing
+    }
+  };
   return (
     <div>
-      <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
+      <div id="printable-area" className="print-container p-6 bg-white rounded-lg shadow-md w-full h-screen">
         <h2 className="text-lg font-semibold mb-4">Order summary</h2>
         {billedItems.map(
           (item) => (
-            (subtotal += item.price*item.quantity),
+            (subtotal += item.price * item.quantity),
             (total = subtotal - subtotal * discount),
             (
               <div
@@ -26,12 +39,10 @@ const PrintBill = () => {
                     Rs. {item.price.toFixed(2)}
                   </p>
 
-                  <p className="text-sm font-medium">
-                    x  {item.quantity} 
-                  </p> 
+                  <p className="text-sm font-medium">x {item.quantity}</p>
                 </div>
                 <div className="flex items-center">
-                   Rs.{(item.price*item.quantity).toFixed(2)}
+                  Rs.{(item.price * item.quantity).toFixed(2)}
                 </div>
               </div>
             )
@@ -51,7 +62,32 @@ const PrintBill = () => {
             <span>Rs. {total.toFixed(2)}</span>
           </div>
         </div>
+        <button
+          onClick={handlePrint}
+          className="w-full mt-2 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        >
+          Print order
+        </button>
       </div>
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: visible;
+          }
+
+          .print-container,
+          .print-container * {
+            visibility: visible;
+          }
+
+          .print-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 };
