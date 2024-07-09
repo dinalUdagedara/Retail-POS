@@ -1,16 +1,54 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
 import { MouseEventHandler } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
 
+
+interface Product {
+  id: number;
+  name: string;
+  size: string;
+  price: number;
+  quantity: number;
+  imageURL: string;
+}
+
+
+
+
 interface ItemListProps {
   onSelection: () => void;
 }
 
+
+
+
+
+
 const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   const availableItems = useStore((state) => state.availableItems);
+  const setSelectedItem = useStore((state) => state.setSelectedItem);
+
+  const [selectedProduct, setSelectedProduct] = useState<Product>(
+    
+    {
+      id: 1,
+      name: "",
+      size: "",
+      price: 0.0,
+      quantity: 0,
+      imageURL: "/assets/hiru.jpg",
+    },
+  
+  );
+  function handleSelectingItem(product: Product) {
+    setSelectedProduct(product);
+    setSelectedItem(product); // Assuming setSelectedItem is a function to set the selected item in the store
+    onSelection();
+  }
 
   return (
     <div className="bg-white ">
@@ -56,7 +94,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
                     Rs. {product.price.toFixed(2)}
                   </p>
                   <button
-                    onClick={onSelection}
+                      onClick={() => handleSelectingItem(product)}
                     className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700 w-2/3 "
                   >
                     Add

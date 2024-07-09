@@ -22,6 +22,7 @@ const Confirmation = () => {
   ]);
   //Zustand setup
   const selectedItem = useStore((state) => state.selectedItem);
+  const billedItems = useStore((state) => state.billedItems);
   const setSelectedItem = useStore((state) => state.setSelectedItem);
   const setBilledItems = useStore((state) => state.setBilledItems);
 
@@ -46,16 +47,10 @@ const Confirmation = () => {
     setBilledItems(updatedProduct);
     console.log("Updated product:", updatedProduct);
   }
-  {
-    selectedItem.map(
-      (item) => (
-        (updatedProduct.name = item.name), (updatedProduct.price = item.price)
-      )
-    );
-  }
+
   return (
     <div className=" w-full p-20 pt-2">
-      {selectedItem.map((item) => (
+      
         <form onSubmit={handleFormSubmit}>
           <div className="space-y-12  w-full ">
             <div className="border-b border-gray-900/10 pb-12">
@@ -72,7 +67,7 @@ const Confirmation = () => {
                     alt="Product Image"
                   />
                   <p className="mt-1 text-md leading-6 text-gray-600 text-center">
-                    {item.name}
+                 { selectedItem?.name}
                   </p>
                 </div>
 
@@ -91,7 +86,7 @@ const Confirmation = () => {
                         autoComplete="quantity"
                         className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       >
-                        <option className="text-center">{item.quantity}</option>
+                        <option className="text-center">{ selectedItem?.quantity}</option>
                         <option className="text-center">2</option>
                         <option className="text-center">3</option>
                       </select>
@@ -125,7 +120,7 @@ const Confirmation = () => {
                         id="weight"
                         name="weight"
                         keyboard={keyboard}
-                        defaultValue={item.size}
+                        defaultValue={ selectedItem?.size}
                         addonAfter="Kg"
                       />
                       <Checkbox
@@ -160,7 +155,7 @@ const Confirmation = () => {
               <div className=" space-y-8">
                 <fieldset>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Rs. {item.price.toFixed(2)}
+                    Rs. {selectedItem?.price.toFixed(2)}
                   </p>
                 </fieldset>
               </div>
@@ -182,7 +177,7 @@ const Confirmation = () => {
             </button>
           </div>
         </form>
-      ))}
+     
     </div>
   );
 };

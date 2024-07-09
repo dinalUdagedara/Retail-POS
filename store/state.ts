@@ -33,7 +33,7 @@ interface BearState {
   bears: number;
   billedItems: Item[];
   availableItems: Item[];
-  selectedItem: Item[];
+  selectedItem: Item | null;
   increasePopulation: () => void;
   removeAllBears: () => void;
   updateBears: (newBears: number) => void;
@@ -55,21 +55,12 @@ export const useStore = create<BearState>((set) => ({
     },
   ] as Item[],
   availableItems: products,
-  selectedItem:[
-      {
-        id: 1,
-        name: "Broken Nadu",
-        size: "5",
-        price: 1150.0,
-        quantity: 3,
-        imageURL: "/assets/hiru.jpg",
-      }
-  ],
+  selectedItem:null, 
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
   updateBears: (newBears) => set({ bears: newBears }),
-  setSelectedItem:(newItem) => set ({selectedItem:newItem as unknown as Item[]}),
+  setSelectedItem:(newItem) => set ({selectedItem:newItem as unknown as Item}),
   setBilledItems: (newItem) => set((state) => ({ billedItems: [...state.billedItems, newItem] })), // Add to billedItems
 
 }));
