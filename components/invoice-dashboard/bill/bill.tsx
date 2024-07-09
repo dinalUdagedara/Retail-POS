@@ -15,6 +15,21 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   let total = 0;
   let discount = 0.1;
 
+
+  
+  const handlePrint = () => {
+    const printableArea = document.getElementById("printable-area");
+    if (printableArea) {
+      const printContents = printableArea.innerHTML;
+      const originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // This line is to reload the page to its original state after printing
+    }
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
@@ -90,7 +105,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
         </div>
       </div>
       <button
-        onClick={onConfirm}
+        // onClick={onConfirm}
+        onClick={handlePrint}
         className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         Confirm order

@@ -1,6 +1,6 @@
 "use client";
 import { useStore } from "@/store/state";
-import Image from "next/image";
+
 const PrintBill = () => {
   const billedItems = useStore((state) => state.billedItems);
   let subtotal = 0;
@@ -21,7 +21,10 @@ const PrintBill = () => {
   };
   return (
     <div>
-      <div id="printable-area" className="print-container p-6 bg-white rounded-lg shadow-md w-full h-screen">
+      <div
+        id="printable-area"
+        className="print-container p-6 bg-white rounded-lg shadow-md w-full h-screen"
+      >
         <h2 className="text-lg font-semibold mb-4">Order summary</h2>
         {billedItems.map(
           (item) => (

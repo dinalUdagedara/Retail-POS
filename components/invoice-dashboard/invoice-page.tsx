@@ -64,7 +64,10 @@ const InvoicePage = () => {
           <Bill onConfirm={handleConfirmOrder} />
         </div>
       </div>
-      <PrintBill />
+      <div className="hidden">
+              <PrintBill />
+      </div>
+
     </div>
   );
 };
