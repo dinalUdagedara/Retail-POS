@@ -5,10 +5,12 @@ import { SizeSelect } from "./size-select";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import Item from "antd/es/list/Item";
+import { Checkbox, InputNumber, Space } from "antd";
 
 const Confirmation = () => {
+  const [keyboard, setKeyboard] = useState(true);
 
-  const [selectedProduct,setSelectedProduct] = useState([
+  const [selectedProduct, setSelectedProduct] = useState([
     {
       id: 1,
       name: "",
@@ -16,7 +18,7 @@ const Confirmation = () => {
       price: 0.0,
       quantity: 0,
       imageURL: "/assets/hiru.jpg",
-    }
+    },
   ]);
   //Zustand setup
   const selectedItem = useStore((state) => state.selectedItem);
@@ -30,7 +32,6 @@ const Confirmation = () => {
     event.preventDefault(); // Prevent the default form submission behavior
     const formData = new FormData(event.currentTarget);
 
-
     formData.forEach((value, key) => {
       if (key === "quantity") {
         updatedProduct.quantity = Number(value);
@@ -39,22 +40,22 @@ const Confirmation = () => {
       } else if (key === "size") {
         updatedProduct.size = value.toString();
       }
-      
     });
 
     setSelectedProduct([updatedProduct]);
     setBilledItems(updatedProduct);
     console.log("Updated product:", updatedProduct);
   }
-  {selectedItem.map((item)=>(
-    updatedProduct.name = item.name,
-    updatedProduct.price = item.price
-  ))}
+  {
+    selectedItem.map(
+      (item) => (
+        (updatedProduct.name = item.name), (updatedProduct.price = item.price)
+      )
+    );
+  }
   return (
-    
     <div className=" w-full p-20 pt-2">
       {selectedItem.map((item) => (
-        
         <form onSubmit={handleFormSubmit}>
           <div className="space-y-12  w-full ">
             <div className="border-b border-gray-900/10 pb-12">
@@ -108,7 +109,7 @@ const Confirmation = () => {
                     Weight
                   </label>
                   <div className="mt-2 items-center">
-                    <select
+                    {/* <select
                       id="weight"
                       name="weight"
                       autoComplete="weight"
@@ -117,7 +118,25 @@ const Confirmation = () => {
                       <option className="text-center">{item.size}</option>
                       <option className="text-center">500g</option>
                       <option className="text-center">1kg</option>
-                    </select>
+                    </select> */}
+
+                    <Space>
+                      <InputNumber
+                        id="weight"
+                        name="weight"
+                        keyboard={keyboard}
+                        defaultValue={item.size}
+                        addonAfter="Kg"
+                      />
+                      <Checkbox
+                        onChange={() => {
+                          setKeyboard(!keyboard);
+                        }}
+                        checked={keyboard}
+                      >
+                        Toggle keyboard
+                      </Checkbox>
+                    </Space>
                   </div>
                 </div>
 
@@ -158,12 +177,10 @@ const Confirmation = () => {
             <button
               type="submit"
               className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              
             >
               Save
             </button>
           </div>
-       
         </form>
       ))}
     </div>

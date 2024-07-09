@@ -48,7 +48,7 @@ export const useStore = create<BearState>((set) => ({
     {
       id: 1,
       name: "Keeri Samba",
-      size: "5kg",
+      size: "5",
       price: 1300.0,
       quantity: 2,
       imageURL: "/assets/hiru.jpg",
@@ -59,7 +59,7 @@ export const useStore = create<BearState>((set) => ({
       {
         id: 1,
         name: "Broken Nadu",
-        size: "5kg",
+        size: "5",
         price: 1150.0,
         quantity: 3,
         imageURL: "/assets/hiru.jpg",

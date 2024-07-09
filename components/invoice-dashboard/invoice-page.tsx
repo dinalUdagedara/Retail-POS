@@ -56,11 +56,6 @@ const InvoicePage = () => {
 
       <div className="w-screen sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
         <Bill
-          items={items}
-          subtotal={subtotal}
-          shipping={shipping}
-          taxes={taxes}
-          total={total}
           onConfirm={handleConfirmOrder}
         />
       </div>
