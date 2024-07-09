@@ -9,7 +9,7 @@ const items = [
     id: 1,
     name: "Hiru",
     color: "Keeri Samba",
-    size: "5 kg",
+    size: "5",
     price: 1300.0,
     quantity: 5,
     imageURL: "/assets/hiru.jpg",

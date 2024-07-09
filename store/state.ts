@@ -4,7 +4,7 @@ const products = [
   {
     id: 1,
     name: "Keeri Samba",
-    size: "5kg",
+    size: "5",
     price: 1300.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
@@ -12,7 +12,7 @@ const products = [
   {
     id: 2,
     name: "Nadu",
-    size: "5kg",
+    size: "5",
     price: 1100.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",

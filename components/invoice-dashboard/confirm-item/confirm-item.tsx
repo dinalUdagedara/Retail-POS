@@ -47,10 +47,13 @@ const Confirmation = () => {
     setBilledItems(updatedProduct);
     console.log("Updated product:", updatedProduct);
   }
-
+  if (selectedItem) {
+    updatedProduct.name = selectedItem.name ?? "";
+    updatedProduct.price = selectedItem.price ?? 0;
+  }
   return (
     <div className=" w-full p-20 pt-2">
-      
+     
         <form onSubmit={handleFormSubmit}>
           <div className="space-y-12  w-full ">
             <div className="border-b border-gray-900/10 pb-12">
@@ -177,7 +180,7 @@ const Confirmation = () => {
             </button>
           </div>
         </form>
-     
+ 
     </div>
   );
 };
