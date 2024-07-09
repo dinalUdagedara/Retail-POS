@@ -72,25 +72,6 @@ const PrintBill = () => {
           Print order
         </button>
       </div>
-      <style jsx global>{`
-        @media print {
-          body * {
-            visibility: visible;
-          }
-
-          .print-container,
-          .print-container * {
-            visibility: visible;
-          }
-
-          .print-container {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-        }
-      `}</style>
     </div>
   );
 };
