@@ -15,12 +15,27 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   let total = 0;
   let discount = 0.1;
 
+
+  
+  const handlePrint = () => {
+    const printableArea = document.getElementById("printable-area");
+    if (printableArea) {
+      const printContents = printableArea.innerHTML;
+      const originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); // This line is to reload the page to its original state after printing
+    }
+  };
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {billedItems.map(
         (item) => (
-          (subtotal += item.price),
+          (subtotal += item.price*item.quantity),
           (total = subtotal - subtotal * discount),
           (
             <div
@@ -36,8 +51,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
               <div className="flex-1 ml-4">
                 <h3 className="text-sm font-medium">{item.name}</h3>
                 <p className="text-sm text-gray-500">{item.size}kg</p>
+                <p className="text-xs ">
+                 Unit Price: Rs. {item.price.toFixed(2)}
+                </p>
                 <p className="text-sm font-medium">
-                  Rs. {item.price.toFixed(2)}
+                  Rs. {(item.price*item.quantity).toFixed(2)}
                 </p>
               </div>
               <div className="flex items-center">
@@ -87,7 +105,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
         </div>
       </div>
       <button
-        onClick={onConfirm}
+        // onClick={onConfirm}
+        onClick={handlePrint}
         className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         Confirm order

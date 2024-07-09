@@ -4,6 +4,7 @@ import Bill from "./bill/bill";
 import Confirmation from "./confirm-item/confirm-item";
 import { useState } from "react";
 import { useStore } from "@/store/state";
+import PrintBill from "./print-bill/print-bill";
 
 const items = [
   {
@@ -49,18 +50,24 @@ const InvoicePage = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between w-full h-full ">
-      <div className="hidden w-full sm:flex justify-center">
-        {itemSelected ? (
-          <Confirmation />
-        ) : (
-          <ItemList onSelection={handleConfirmItem} />
-        )}
+    <div>
+      <div className="flex flex-row justify-between w-full h-full ">
+        <div className="hidden w-full sm:flex justify-center">
+          {itemSelected ? (
+            <Confirmation />
+          ) : (
+            <ItemList onSelection={handleConfirmItem} />
+          )}
+        </div>
+
+        <div className="w-screen sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
+          <Bill onConfirm={handleConfirmOrder} />
+        </div>
+      </div>
+      <div className="hidden">
+              <PrintBill />
       </div>
 
-      <div className="w-screen sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
-        <Bill onConfirm={handleConfirmOrder} />
-      </div>
     </div>
   );
 };
