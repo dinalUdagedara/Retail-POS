@@ -1,106 +1,43 @@
 "use client";
 import Image from "next/image";
-import { MouseEventHandler } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
-const products = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "Rs.35",
-    color: "Black",
-  },
-  {
-    id: 2,
-    name: "Casual Shirt",
-    href: "#",
-    imageSrc: "/assets/araliya.jpg",
-    imageAlt: "Front of men's Casual Shirt in black.",
-    price: "Rs.45",
-    color: "Black",
-  },
-  {
-    id: 3,
-    name: "Sporty Jacket",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Sporty Jacket in black.",
-    price: "Rs.75",
-    color: "Black",
-  },
-  {
-    id: 4,
-    name: "Slim Fit Jeans",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Slim Fit Jeans in black.",
-    price: "Rs.55",
-    color: "Black",
-  },
-  {
-    id: 5,
-    name: "Formal Trousers",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Formal Trousers in black.",
-    price: "Rs.60",
-    color: "Black",
-  },
-  {
-    id: 6,
-    name: "Classic Blazer",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Classic Blazer in black.",
-    price: "Rs.120",
-    color: "Black",
-  },
-  {
-    id: 7,
-    name: "Cotton Shorts",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Cotton Shorts in black.",
-    price: "Rs.25",
-    color: "Black",
-  },
-  {
-    id: 8,
-    name: "Polo T-shirt",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Polo T-shirt in black.",
-    price: "Rs.30",
-    color: "Black",
-  },
-  {
-    id: 9,
-    name: "Leather Belt",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Leather Belt in black.",
-    price: "Rs.40",
-    color: "Black",
-  },
-  {
-    id: 10,
-    name: "Sneakers",
-    href: "#",
-    imageSrc: "/assets/hiru.jpg",
-    imageAlt: "Front of men's Sneakers in black.",
-    price: "Rs.80",
-    color: "Black",
-  },
-];
+import { useStore } from "@/store/state";
+
+interface Product {
+  id: number;
+  name: string;
+  size: string;
+  price: number;
+  quantity: number;
+  imageURL: string;
+}
 
 interface ItemListProps {
   onSelection: () => void;
 }
 
 const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
+  const availableItems = useStore((state) => state.availableItems);
+  const setSelectedItem = useStore((state) => state.setSelectedItem);
+
+
+
+  const [selectedProduct, setSelectedProduct] = useState<Product>({
+    id: 1,
+    name: "",
+    size: "",
+    price: 0.0,
+    quantity: 0,
+    imageURL: "/assets/hiru.jpg",
+  });
+  function handleSelectingItem(product: Product) {
+    setSelectedProduct(product);
+    setSelectedItem(product); // Assuming setSelectedItem is a function to set the selected item in the store
+    onSelection();
+  }
+
   return (
     <div className="bg-white ">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8">
@@ -119,36 +56,38 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
+          {availableItems.map((product) => (
             <div key={product.id} className="group relative">
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 min-h-60">
                 <Image
-                  alt={product.imageAlt}
-                  src={product.imageSrc}
+                  alt={product.imageURL}
+                  src={product.imageURL}
                   layout="responsive"
                   width={1000}
                   height={1000}
                 />
               </div>
               <div className="mt-4 flex justify-between">
-                <div>
+                <div className="flex flex-col">
                   <h3 className="text-sm text-gray-700">
-                    <a href={product.href}>
-                      <span aria-hidden="true" className=" block" />
-                      {product.name}
-                    </a>
+                    <span aria-hidden="true" className=" block" />
+                    {product.name}
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                  <p className="mt-3 ml-1 text-sm text-gray-500">
+                    {product.size}
+                  </p>
+                </div>
+                <div className="flex flex-col items-center">
+                  <p className="text-sm font-medium text-gray-900">
+                    Rs. {product.price.toFixed(2)}
+                  </p>
                   <button
-                    onClick={onSelection}
-                    className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700"
+                    onClick={() => handleSelectingItem(product)}
+                    className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700 w-2/3 "
                   >
                     Add
                   </button>
                 </div>
-                <p className="text-sm font-medium text-gray-900">
-                  {product.price}
-                </p>
               </div>
             </div>
           ))}

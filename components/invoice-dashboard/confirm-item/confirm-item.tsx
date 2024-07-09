@@ -3,14 +3,59 @@ import { useState } from "react";
 import { useStore } from "@/store/state";
 import { SizeSelect } from "./size-select";
 import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import Item from "antd/es/list/Item";
+import { Checkbox, InputNumber, Space } from "antd";
 
 const Confirmation = () => {
-  //Zustand setup
-  const bears = useStore((state) => state.bears);
+  const [keyboard, setKeyboard] = useState(true);
 
+  const [selectedProduct, setSelectedProduct] = useState([
+    {
+      id: 1,
+      name: "",
+      size: "",
+      price: 0.0,
+      quantity: 0,
+      imageURL: "/assets/hiru.jpg",
+    },
+  ]);
+  //Zustand setup
+  const selectedItem = useStore((state) => state.selectedItem);
+  const setBilledItems = useStore((state) => state.setBilledItems);
+  const setItemSelected = useStore((state) => state.setItemSelected);
+
+  const updatedProduct = { ...selectedProduct[0] };
+
+  function handleFormSubmit(event: any) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    formData.forEach((value, key) => {
+      if (key === "quantity") {
+        updatedProduct.quantity = Number(value);
+      } else if (key === "weight") {
+        updatedProduct.size = value.toString();
+      } else if (key === "size") {
+        updatedProduct.size = value.toString();
+      }
+    });
+
+    setSelectedProduct([updatedProduct]);
+    setBilledItems(updatedProduct);
+
+    //Back to main page
+    setItemSelected(false);
+
+    console.log("Updated product:", updatedProduct);
+  }
+  if (selectedItem) {
+    updatedProduct.name = selectedItem.name ?? "";
+    updatedProduct.price = selectedItem.price ?? 0;
+  }
   return (
     <div className=" w-full p-20 pt-2">
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <div className="space-y-12  w-full ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900 ">
@@ -26,26 +71,28 @@ const Confirmation = () => {
                   alt="Product Image"
                 />
                 <p className="mt-1 text-md leading-6 text-gray-600 text-center">
-                  Keeri Samba
+                  {selectedItem?.name}
                 </p>
               </div>
 
               <div className="sm:col-span-3">
                 <div className="flex flex-row gap-6 m-20">
                   <label
-                    htmlFor="country"
+                    htmlFor="numberOfItems"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Number of Items
                   </label>
                   <div>
                     <select
-                      id="country"
-                      name="country"
-                      autoComplete="country-name"
+                      id="quantity"
+                      name="quantity"
+                      autoComplete="quantity"
                       className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      <option className="text-center">1</option>
+                      <option className="text-center">
+                        {selectedItem?.quantity}
+                      </option>
                       <option className="text-center">2</option>
                       <option className="text-center">3</option>
                     </select>
@@ -57,31 +104,54 @@ const Confirmation = () => {
             <div className="flex flex-row justify-between mt-5 border-t p-6 pb-0">
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="country"
+                  htmlFor="weight"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Weight
                 </label>
                 <div className="mt-2 items-center">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-fullrounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option className="text-center">250g</option>
-                    <option className="text-center">500g</option>
-                    <option className="text-center">1kg</option>
-                  </select>
+                  {/* <select
+                      id="weight"
+                      name="weight"
+                      autoComplete="weight"
+                      className="block w-fullrounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      <option className="text-center">{item.size}</option>
+                      <option className="text-center">500g</option>
+                      <option className="text-center">1kg</option>
+                    </select> */}
+
+                  <Space>
+                    <InputNumber
+                      id="weight"
+                      name="weight"
+                      keyboard={keyboard}
+                      defaultValue={selectedItem?.size}
+                      addonAfter="Kg"
+                    />
+                    <Checkbox
+                      onChange={() => {
+                        setKeyboard(!keyboard);
+                      }}
+                      checked={keyboard}
+                    >
+                      Toggle keyboard
+                    </Checkbox>
+                  </Space>
                 </div>
               </div>
 
-              <div className="sm:col-span-3 mt-6">
+              <div className="sm:col-span-3 ">
+                <label
+                  htmlFor="size"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Size
+                </label>
                 <SizeSelect />
               </div>
             </div>
           </div>
-
 
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -91,7 +161,7 @@ const Confirmation = () => {
             <div className=" space-y-8">
               <fieldset>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
-                  Rs. 1300.00
+                  Rs. {selectedItem?.price.toFixed(2)}
                 </p>
               </fieldset>
             </div>
