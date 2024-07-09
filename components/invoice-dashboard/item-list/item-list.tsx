@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { MouseEventHandler } from "react";
+import { Input } from "@/components/ui/input";
+import { FaSearch } from "react-icons/fa";
 const products = [
   {
     id: 1,
@@ -102,6 +104,16 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   return (
     <div className="bg-white ">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8">
+        <div className="flex justify-center">
+          <div className="relative w-2/3 items-center">
+            <Input
+              type="text"
+              placeholder="Search for Products"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <FaSearch className="absolute left-3 top-3 text-gray-400" />
+          </div>
+        </div>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 ">
           Items
         </h2>
@@ -128,16 +140,15 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                   <button
-                  onClick={onSelection}
-                  className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700"
-                >
-                  Add
-                </button>
+                    onClick={onSelection}
+                    className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700"
+                  >
+                    Add
+                  </button>
                 </div>
                 <p className="text-sm font-medium text-gray-900">
                   {product.price}
                 </p>
-                
               </div>
             </div>
           ))}
