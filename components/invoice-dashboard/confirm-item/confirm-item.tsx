@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Confirmation = () => {
   //Zustand setup
-  const bears = useStore((state) => state.bears);
+  const selectedItem = useStore((state) => state.selectedItem);
 
   return (
     <div className=" w-full p-20 pt-2">

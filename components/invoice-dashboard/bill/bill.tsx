@@ -1,20 +1,10 @@
 // components/OrderSummary.tsx
 
-import React from 'react';
-import Image from 'next/image';
-
-interface OrderItem {
-  id: number;
-  name: string;
-  color: string;
-  size: string;
-  price: number;
-  quantity: number;
-  image: string;
-}
+import React from "react";
+import Image from "next/image";
+import { useStore } from "@/store/state";
 
 interface OrderSummaryProps {
-  items: OrderItem[];
   subtotal: number;
   shipping: number;
   taxes: number;
@@ -23,30 +13,27 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
-  items,
   subtotal,
   shipping,
   taxes,
   total,
   onConfirm,
 }) => {
+  const billedItems = useStore((state) => state.billedItems);
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
-      {items.map((item) => (
-        <div key={item.id} className="flex items-center justify-between border-b border-gray-200 py-4">
-
-          <Image
-            src={item.image}
-            alt={item.name} 
-            width={100}
-            height={100}
-          />
+      {billedItems.map((item) => (
+        <div
+          key={item.id}
+          className="flex items-center justify-between border-b border-gray-200 py-4"
+        >
+          <Image src={item.imageURL} alt={item.name} width={100} height={100} />
           <div className="flex-1 ml-4">
             <h3 className="text-sm font-medium">{item.name}</h3>
-            <p className="text-sm text-gray-500">{item.color}</p>
             <p className="text-sm text-gray-500">{item.size}</p>
-            <p className="text-sm font-medium">${item.price.toFixed(2)}</p>
+            <p className="text-sm font-medium">Rs. {item.price.toFixed(2)}</p>
           </div>
           <div className="flex items-center">
             <select
@@ -68,7 +55,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                 stroke="currentColor"
                 className="w-6 h-6"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>

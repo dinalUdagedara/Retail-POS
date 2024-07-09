@@ -12,7 +12,7 @@ const items = [
     size: "5 kg",
     price: 1300.0,
     quantity: 5,
-    image: "/assets/hiru.jpg",
+    imageURL: "/assets/hiru.jpg",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const items = [
     size: "Large",
     price: 32.0,
     quantity: 1,
-    image: "/assets/araliya.jpg",
+    imageURL: "/assets/araliya.jpg",
   },
 ];
 
