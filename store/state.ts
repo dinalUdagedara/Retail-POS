@@ -37,7 +37,7 @@ interface BearState {
   increasePopulation: () => void;
   removeAllBears: () => void;
   updateBears: (newBears: number) => void;
-  setSelectedItem: (newSelectedItem:Item[]) => void;
+  setSelectedItem: (newSelectedItem:Item) => void;
   setBilledItems: (newItem: Item) => void;
 
 }
@@ -56,7 +56,6 @@ export const useStore = create<BearState>((set) => ({
   ] as Item[],
   availableItems: products,
   selectedItem:[
-    
       {
         id: 1,
         name: "Broken Nadu",
@@ -65,7 +64,6 @@ export const useStore = create<BearState>((set) => ({
         quantity: 3,
         imageURL: "/assets/hiru.jpg",
       }
-    
   ],
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),

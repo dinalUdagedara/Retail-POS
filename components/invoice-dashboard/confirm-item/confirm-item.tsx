@@ -7,6 +7,17 @@ import { Input } from "@/components/ui/input";
 import Item from "antd/es/list/Item";
 
 const Confirmation = () => {
+
+  const [selectedProduct,setSelectedProduct] = useState([
+    {
+      id: 1,
+      name: "",
+      size: "",
+      price: 0.0,
+      quantity: 0,
+      imageURL: "/assets/hiru.jpg",
+    }
+  ]);
   //Zustand setup
   const selectedItem = useStore((state) => state.selectedItem);
   const setSelectedItem = useStore((state) => state.setSelectedItem);
@@ -14,20 +25,36 @@ const Confirmation = () => {
 
   const bears = useStore((state) => state.bears);
   const increasePopulation = useStore((state) => state.increasePopulation);
-
+  const updatedProduct = { ...selectedProduct[0] };
   function handleFormSubmit(event: any) {
     event.preventDefault(); // Prevent the default form submission behavior
-    console.log("submitted");
-
     const formData = new FormData(event.currentTarget);
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-  }
 
+
+    formData.forEach((value, key) => {
+      if (key === "quantity") {
+        updatedProduct.quantity = Number(value);
+      } else if (key === "weight") {
+        updatedProduct.size = value.toString();
+      } else if (key === "size") {
+        updatedProduct.size = value.toString();
+      }
+      
+    });
+
+    setSelectedProduct([updatedProduct]);
+    setBilledItems(updatedProduct);
+    console.log("Updated product:", updatedProduct);
+  }
+  {selectedItem.map((item)=>(
+    updatedProduct.name = item.name,
+    updatedProduct.price = item.price
+  ))}
   return (
+    
     <div className=" w-full p-20 pt-2">
       {selectedItem.map((item) => (
+        
         <form onSubmit={handleFormSubmit}>
           <div className="space-y-12  w-full ">
             <div className="border-b border-gray-900/10 pb-12">
@@ -131,44 +158,12 @@ const Confirmation = () => {
             <button
               type="submit"
               className="rounded-md bg-slate-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() =>
-                setBilledItems(
-                  {
-                    id: 1,
-                    name: "Broken Nadu",
-                    size: "5kg",
-                    price: 1150.0,
-                    quantity: 3,
-                    imageURL: "/assets/hiru.jpg",
-                  },
-                )
-              }
+              
             >
               Save
             </button>
           </div>
-          <button onClick={increasePopulation}>setItem</button>
-          <h1>{bears} around here...</h1>
-
-          <button
-            type="button"
-            onClick={() =>
-              setSelectedItem([
-                {
-                  id: 1,
-                  name: "Broken Nadu",
-                  size: "5kg",
-                  price: 1150.0,
-                  quantity: 3,
-                  imageURL: "/assets/hiru.jpg",
-                },
-              ])
-            }
-          >
-            Set Selected Item
-          </button>
-
-          <h1>{bears} around here...</h1>
+       
         </form>
       ))}
     </div>
