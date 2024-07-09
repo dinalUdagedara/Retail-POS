@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { MouseEventHandler } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
@@ -22,6 +21,8 @@ interface ItemListProps {
 const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   const availableItems = useStore((state) => state.availableItems);
   const setSelectedItem = useStore((state) => state.setSelectedItem);
+
+
 
   const [selectedProduct, setSelectedProduct] = useState<Product>({
     id: 1,
