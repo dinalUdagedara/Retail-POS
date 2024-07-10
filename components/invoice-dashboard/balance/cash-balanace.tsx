@@ -7,6 +7,8 @@ import { useState } from "react";
 
 const Cashbalance = () => {
   const total = useStore((state) => state.total);
+  const amountGiven = useStore((state) => state.amountGiven);
+  const setAmountGiven = useStore((state) => state.setAmountGiven);
 
   const [givenAmount, setGivenAmount] = useState(0);
 
@@ -20,7 +22,14 @@ const Cashbalance = () => {
   };
   const handleClickBalance = () => {
     setGivenAmount(givenAmountInput);
+    setAmountGiven(givenAmountInput)
     setAmountEntered(true)
+  };
+
+  const handleKeyDown = (e: { key: string; }) => {
+    if (e.key === 'Enter' && !amountEntered) {
+      handleClickBalance();
+    }
   };
 
   return (
@@ -37,9 +46,11 @@ const Cashbalance = () => {
 
         <div className="space-y-1">
           <Input
+            disabled={amountEntered}
             type="number"
             placeholder="Enter Amount"
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div className="flex justify-end m-2">

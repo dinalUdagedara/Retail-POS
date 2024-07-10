@@ -9,6 +9,10 @@ import Cashbalance from "./balance/cash-balanace";
 
 const InvoicePage = () => {
   const itemSelected = useStore((state) => state.itemSelected);
+
+  const amountGiven = useStore((state) => state.amountGiven);
+  const setAmountGiven = useStore((state) => state.setAmountGiven);
+
   const setItemSelected = useStore((state) => state.setItemSelected);
 
   const [showPrintBill, setShowPrintBill] = useState(false);
@@ -44,9 +48,11 @@ const InvoicePage = () => {
   const displayPrintBill = () => {
     setShowPrintBill(true);
     setShowCashbalance(false);
+    setAmountGiven(0)
   };
 
   return (
+    
     <div>
       <div className="flex flex-row justify-between w-full h-full ">
         <div className="hidden w-full sm:flex justify-center">
@@ -93,8 +99,12 @@ const InvoicePage = () => {
               </button>
               
               <button
-                className="mt-4 p-2 bg-slate-700 text-white rounded-3xl w-[100px]"
-                onClick={displayPrintBill}
+                className={`${
+                  amountGiven === 0
+                    ? 'bg-slate-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-slate-700 hover:bg-slate-500 text-white'
+                } rounded-3xl p-2 mt-4 w-[100px]`} onClick={displayPrintBill}
+                disabled={amountGiven === 0}
               >
                 Proceed
               </button>
