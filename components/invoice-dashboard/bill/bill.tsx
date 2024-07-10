@@ -61,7 +61,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                 </p>
               </div>
               <div className="flex items-center">
-                <select
+                <div className="flex justify-center font-semibold rounded-lg">
+                x {item.quantity} Items
+                </div>
+
+                {/* <select
                   value={item.quantity}
                   className="block w-full py-2 text-center border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
@@ -70,7 +74,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                       {i + 1}
                     </option>
                   ))}
-                </select>
+                </select> */}
+
+
                 <button className="ml-4 text-red-500 hover:text-red-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
