@@ -8,6 +8,7 @@ import { useState } from "react";
 const Cashbalance = () => {
   const total = useStore((state) => state.total);
   const amountGiven = useStore((state) => state.amountGiven);
+  const balanceEntered = useStore((state)=> state.balanceEntered);
   const setAmountGiven = useStore((state) => state.setAmountGiven);
   const setBalancegiven = useStore((state) => state.setBalanceGiven);
 
@@ -50,7 +51,7 @@ const Cashbalance = () => {
 
         <div className="space-y-1">
           <Input
-            disabled={amountEntered}
+            disabled={balanceEntered}
             type="number"
             placeholder="Enter Amount"
             onChange={handleInputChange}
@@ -60,12 +61,12 @@ const Cashbalance = () => {
           <div className="flex justify-end m-2">
             <button
                className={`${
-                amountEntered
+                balanceEntered
                   ? 'bg-slate-300 text-gray-500 cursor-not-allowed'
                   : 'bg-slate-700 hover:bg-slate-500 text-white'
               } rounded-lg p-2 mt-3`}
               onClick={handleClickBalance}
-              disabled={amountEntered}
+              disabled={balanceEntered}
             >
               Enter
             </button>

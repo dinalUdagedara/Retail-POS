@@ -67,7 +67,7 @@ const InvoicePage = () => {
           )}
         </div>
 
-        <div className="w-screen sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
+        <div className="w-screen h-full sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
           <Bill onConfirm={handleConfirmOrder} />
         </div>
       </div>
