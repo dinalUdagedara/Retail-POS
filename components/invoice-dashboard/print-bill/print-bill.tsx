@@ -3,8 +3,12 @@ import { useStore } from "@/store/state";
 
 const PrintBill = () => {
   const billedItems = useStore((state) => state.billedItems);
+
+  const amountGiven = useStore((state) => state.amountGiven);
+  const balanceGiven = useStore((state) => state.balanceGiven);
+
   let subtotal = 0;
-  let total = 0;
+  let total = useStore((state) => state.total);
   let discount = 0.1;
 
   const handlePrint = () => {
@@ -52,26 +56,37 @@ const PrintBill = () => {
           )
         )}
         <div className="mt-6 space-y-1 text-sm">
-          <div className="flex justify-between">
-            <span>Subtotal</span>
-            <span>Rs. {subtotal.toFixed(2)}</span>
+          <div className="flex justify-between ">
+            <span>Given Amount</span>
+            <span>Rs. {amountGiven.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between font-semibold">
-            <span>Discount</span>
-            <span>Rs. {(subtotal * discount).toFixed(2)}</span>
+
+          <div className="flex justify-between ">
+            <span>Balance Given</span>
+            <span>Rs. {balanceGiven.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between font-semibold">
-            <span>Total</span>
-            <span>Rs. {total.toFixed(2)}</span>
+          <div>
+            <div className="flex justify-between mt-10">
+              <span>Subtotal</span>
+              <span>Rs. {subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between font-semibold">
+              <span>Discount</span>
+              <span>Rs. {(subtotal * discount).toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between font-semibold">
+              <span>Total</span>
+              <span>Rs. {total.toFixed(2)}</span>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center "> 
-        <button
-          onClick={handlePrint}
-          className="w-40 py-3 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          Print order
-        </button>
+        <div className="flex justify-center ">
+          <button
+            onClick={handlePrint}
+            className="w-40 py-3 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          >
+            Print order
+          </button>
         </div>
       </div>
     </div>

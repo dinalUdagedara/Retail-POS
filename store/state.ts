@@ -31,24 +31,36 @@ interface Item {
 
 interface BearState {
   bears: number;
+  total:number;
   billedItems: Item[];
   availableItems: Item[];
   selectedItem: Item | null;
   itemSelected: boolean;
+  amountGiven:number ;
+  balanceGiven:number ;
+  balanceEntered:boolean;
   increasePopulation: () => void;
   removeAllBears: () => void;
   updateBears: (newBears: number) => void;
   setSelectedItem: (newSelectedItem: Item) => void;
   setBilledItems: (newItem: Item) => void;
   setItemSelected: (change: boolean) => void;
+  setTotal:(newTotal:number) => void;
+  setBalanceGiven:(newBalance:number) => void;
+  setAmountGiven:(newGivenAmount:number) => void;
+  setBalanceEntered:(value:boolean) => void;
 }
 
 export const useStore = create<BearState>((set) => ({
   bears: 10,
+  total:0,
   billedItems: [] as Item[],
   availableItems: products,
   selectedItem: null,
   itemSelected: false,
+  balanceGiven:0,
+  amountGiven:0,
+  balanceEntered:false,
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
@@ -58,4 +70,9 @@ export const useStore = create<BearState>((set) => ({
   setBilledItems: (newItem) =>
     set((state) => ({ billedItems: [...state.billedItems, newItem] })), // Add to billedItems
   setItemSelected: (change) => set({ itemSelected: change }),
+  setTotal:(newTotal) => set ({total:newTotal}),
+  setBalanceGiven:(newBalance) => set ({balanceGiven:newBalance}),
+  setAmountGiven:(newGivenAmount) => set ({amountGiven:newGivenAmount}),
+  setBalanceEntered:(value) => set ({balanceEntered:value})
+
 }));
