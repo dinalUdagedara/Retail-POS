@@ -31,6 +31,7 @@ interface Item {
 
 interface BearState {
   bears: number;
+  total:number;
   billedItems: Item[];
   availableItems: Item[];
   selectedItem: Item | null;
@@ -41,10 +42,12 @@ interface BearState {
   setSelectedItem: (newSelectedItem: Item) => void;
   setBilledItems: (newItem: Item) => void;
   setItemSelected: (change: boolean) => void;
+  setTotal:(newTotal:number) => void;
 }
 
 export const useStore = create<BearState>((set) => ({
   bears: 10,
+  total:0,
   billedItems: [] as Item[],
   availableItems: products,
   selectedItem: null,
@@ -58,4 +61,5 @@ export const useStore = create<BearState>((set) => ({
   setBilledItems: (newItem) =>
     set((state) => ({ billedItems: [...state.billedItems, newItem] })), // Add to billedItems
   setItemSelected: (change) => set({ itemSelected: change }),
+  setTotal:(newTotal) => set ({total:newTotal}),
 }));

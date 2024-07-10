@@ -11,6 +11,7 @@ interface OrderSummaryProps {
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   const billedItems = useStore((state) => state.billedItems);
+  const setTotal = useStore((state)=> state.setTotal)
 
   let subtotal = 0;
   let total = 0;
@@ -19,6 +20,10 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
 
   
   const handlePrint = () => {
+
+
+    setTotal(total)
+
     const printableArea = document.getElementById("printable-area");
     onConfirm();
     if (printableArea) {
