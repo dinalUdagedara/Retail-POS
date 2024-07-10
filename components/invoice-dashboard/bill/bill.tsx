@@ -19,6 +19,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   
   const handlePrint = () => {
     const printableArea = document.getElementById("printable-area");
+    onConfirm();
     if (printableArea) {
       const printContents = printableArea.innerHTML;
       const originalContents = document.body.innerHTML;
@@ -109,7 +110,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
         onClick={handlePrint}
         className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
-        Confirm order
+        Print Bill
       </button>
     </div>
   );

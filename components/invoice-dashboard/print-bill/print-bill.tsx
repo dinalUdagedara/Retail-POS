@@ -23,7 +23,7 @@ const PrintBill = () => {
     <div>
       <div
         id="printable-area"
-        className="print-container p-6 bg-white rounded-lg shadow-md w-full h-screen"
+        className="print-container p-6 bg-white rounded-lg shadow-md h-full"
       >
         <h2 className="text-lg font-semibold mb-4">Order summary</h2>
         {billedItems.map(
@@ -65,12 +65,14 @@ const PrintBill = () => {
             <span>Rs. {total.toFixed(2)}</span>
           </div>
         </div>
+        <div className="flex justify-center "> 
         <button
           onClick={handlePrint}
-          className="w-full mt-2 py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          className="w-40 py-3 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
           Print order
         </button>
+        </div>
       </div>
     </div>
   );

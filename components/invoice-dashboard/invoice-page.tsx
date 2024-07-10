@@ -36,10 +36,13 @@ const InvoicePage = () => {
   const itemSelected = useStore((state) => state.itemSelected);
   const setItemSelected = useStore((state) => state.setItemSelected);
 
+  const [showPrintBill, setShowPrintBill] = useState(false);
+
   const handleConfirmOrder = () => {
     // Handle order confirmation logic here
     // setItemSelected("selected");
     setItemSelected(false);
+    setShowPrintBill(true);
 
     console.log("Order confirmed!", itemSelected);
   };
@@ -47,6 +50,10 @@ const InvoicePage = () => {
   const handleConfirmItem = () => {
     setItemSelected(true);
     console.log("Item Selected Successfully", itemSelected);
+  };
+
+  const closePrintBill = () => {
+    setShowPrintBill(false);
   };
 
   return (
@@ -64,10 +71,23 @@ const InvoicePage = () => {
           <Bill onConfirm={handleConfirmOrder} />
         </div>
       </div>
-      <div className="hidden">
-              <PrintBill />
-      </div>
 
+      {showPrintBill && (
+        <div className="fixed  inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
+          <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
+            <PrintBill />
+            <div className="flex justify-end">
+              <button
+                className="mt-4 p-2 bg-red-800 text-white rounded-3xl w-20"
+                onClick={closePrintBill}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
