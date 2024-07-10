@@ -7,32 +7,6 @@ import { useStore } from "@/store/state";
 import PrintBill from "./print-bill/print-bill";
 import Cashbalance from "./balance/cash-balanace";
 
-const items = [
-  {
-    id: 1,
-    name: "Hiru",
-    color: "Keeri Samba",
-    size: "5",
-    price: 1300.0,
-    quantity: 5,
-    imageURL: "/assets/hiru.jpg",
-  },
-  {
-    id: 2,
-    name: "Basic Tee",
-    color: "Sienna",
-    size: "Large",
-    price: 32.0,
-    quantity: 1,
-    imageURL: "/assets/araliya.jpg",
-  },
-];
-
-const subtotal = items.reduce(
-  (acc, item) => acc + item.price * item.quantity,
-  0
-);
-
 const InvoicePage = () => {
   const itemSelected = useStore((state) => state.itemSelected);
   const setItemSelected = useStore((state) => state.setItemSelected);
@@ -117,6 +91,7 @@ const InvoicePage = () => {
               >
                 Cancel
               </button>
+              
               <button
                 className="mt-4 p-2 bg-slate-700 text-white rounded-3xl w-[100px]"
                 onClick={displayPrintBill}
