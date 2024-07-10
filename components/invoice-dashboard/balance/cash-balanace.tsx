@@ -9,10 +9,14 @@ const Cashbalance = () => {
   const total = useStore((state) => state.total);
   const amountGiven = useStore((state) => state.amountGiven);
   const setAmountGiven = useStore((state) => state.setAmountGiven);
+  const setBalancegiven = useStore((state) => state.setBalanceGiven);
+
+  const setBalanceEntered = useStore((state) => state.setBalanceEntered);
 
   const [givenAmount, setGivenAmount] = useState(0);
 
   const balance = givenAmount - total;
+  setBalancegiven(balance)
   const [amountEntered,setAmountEntered] = useState(false)
   let givenAmountInput: number = 0;
 
@@ -23,7 +27,7 @@ const Cashbalance = () => {
   const handleClickBalance = () => {
     setGivenAmount(givenAmountInput);
     setAmountGiven(givenAmountInput)
-    setAmountEntered(true)
+    setBalanceEntered(true)
   };
 
   const handleKeyDown = (e: { key: string; }) => {

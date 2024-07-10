@@ -3,8 +3,12 @@ import { useStore } from "@/store/state";
 
 const PrintBill = () => {
   const billedItems = useStore((state) => state.billedItems);
+  
+  const amountGiven = useStore((state) => state.amountGiven);
+  const balanceGiven = useStore((state) => state.balanceGiven);
+  
   let subtotal = 0;
-  let total = 0;
+  let total = useStore((state) => state.total);
   let discount = 0.1;
 
   const handlePrint = () => {
@@ -64,6 +68,17 @@ const PrintBill = () => {
             <span>Total</span>
             <span>Rs. {total.toFixed(2)}</span>
           </div>
+
+          <div className="flex justify-between font-semibold">
+            <span>Given Amount</span>
+            <span>Rs. {amountGiven.toFixed(2)}</span>
+          </div>
+
+          <div className="flex justify-between font-semibold">
+            <span>Balance Given</span>
+            <span>Rs. {balanceGiven.toFixed(2)}</span>
+          </div>
+
         </div>
         <div className="flex justify-center ">
           <button

@@ -11,6 +11,10 @@ const InvoicePage = () => {
   const itemSelected = useStore((state) => state.itemSelected);
 
   const amountGiven = useStore((state) => state.amountGiven);
+  
+  const balanceEntered = useStore((state) => state.balanceEntered);
+  const setBalanceEntered = useStore((state) => state.setBalanceEntered);
+
   const setAmountGiven = useStore((state) => state.setAmountGiven);
 
   const setItemSelected = useStore((state) => state.setItemSelected);
@@ -48,7 +52,7 @@ const InvoicePage = () => {
   const displayPrintBill = () => {
     setShowPrintBill(true);
     setShowCashbalance(false);
-    setAmountGiven(0)
+    setBalanceEntered(false)
   };
 
   return (
@@ -100,11 +104,11 @@ const InvoicePage = () => {
               
               <button
                 className={`${
-                  amountGiven === 0
+                  balanceEntered === false
                     ? 'bg-slate-300 text-gray-500 cursor-not-allowed'
                     : 'bg-slate-700 hover:bg-slate-500 text-white'
                 } rounded-3xl p-2 mt-4 w-[100px]`} onClick={displayPrintBill}
-                disabled={amountGiven === 0}
+                disabled={balanceEntered === false}
               >
                 Proceed
               </button>
