@@ -110,7 +110,7 @@ const InvoicePage = () => {
           <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
           <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
             <Cashbalance />
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-4">
               <button
                 className="mt-4 p-2 bg-red-800 text-white rounded-3xl w-20"
                 onClick={closeCashbalance}
@@ -118,7 +118,7 @@ const InvoicePage = () => {
                 Cancel
               </button>
               <button
-                className="mt-4 p-2 bg-slate-700 text-white rounded-3xl w-40"
+                className="mt-4 p-2 bg-slate-700 text-white rounded-3xl w-[100px]"
                 onClick={displayPrintBill}
               >
                 Proceed

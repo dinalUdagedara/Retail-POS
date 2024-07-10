@@ -65,13 +65,13 @@ const PrintBill = () => {
             <span>Rs. {total.toFixed(2)}</span>
           </div>
         </div>
-        <div className="flex justify-center "> 
-        <button
-          onClick={handlePrint}
-          className="w-40 py-3 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          Print order
-        </button>
+        <div className="flex justify-center ">
+          <button
+            onClick={handlePrint}
+            className="w-40 py-3 bg-slate-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
+          >
+            Print order
+          </button>
         </div>
       </div>
     </div>

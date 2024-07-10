@@ -4,25 +4,20 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useStore } from "@/store/state";
 
-
 interface OrderSummaryProps {
   onConfirm: () => void;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   const billedItems = useStore((state) => state.billedItems);
-  const setTotal = useStore((state)=> state.setTotal)
+  const setTotal = useStore((state) => state.setTotal);
 
   let subtotal = 0;
   let total = 0;
   let discount = 0.1;
 
-
-  
   const handlePrint = () => {
-
-
-    setTotal(total)
+    setTotal(total);
 
     const printableArea = document.getElementById("printable-area");
     onConfirm();
@@ -37,14 +32,12 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
     }
   };
 
-
-
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {billedItems.map(
         (item) => (
-          (subtotal += item.price*item.quantity),
+          (subtotal += item.price * item.quantity),
           (total = subtotal - subtotal * discount),
           (
             <div
@@ -61,10 +54,10 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                 <h3 className="text-sm font-medium">{item.name}</h3>
                 <p className="text-sm text-gray-500">{item.size}kg</p>
                 <p className="text-xs ">
-                 Unit Price: Rs. {item.price.toFixed(2)}
+                  Unit Price: Rs. {item.price.toFixed(2)}
                 </p>
                 <p className="text-sm font-medium">
-                  Rs. {(item.price*item.quantity).toFixed(2)}
+                  Rs. {(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
               <div className="flex items-center">
@@ -106,7 +99,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
         </div>
         <div className="flex justify-between font-semibold">
           <span>Discount</span>
-          <span>Rs. {(subtotal*discount).toFixed(2)}</span>
+          <span>Rs. {(subtotal * discount).toFixed(2)}</span>
         </div>
         <div className="flex justify-between font-semibold">
           <span>Total</span>
@@ -120,7 +113,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
       >
         Print Bill
       </button>
-
     </div>
   );
 };
