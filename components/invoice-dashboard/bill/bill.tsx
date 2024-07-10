@@ -1,8 +1,9 @@
 // components/OrderSummary.tsx
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useStore } from "@/store/state";
+
 
 interface OrderSummaryProps {
   onConfirm: () => void;
@@ -30,6 +31,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
       window.location.reload(); // This line is to reload the page to its original state after printing
     }
   };
+
+
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-screen">
@@ -112,6 +115,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
       >
         Print Bill
       </button>
+
     </div>
   );
 };

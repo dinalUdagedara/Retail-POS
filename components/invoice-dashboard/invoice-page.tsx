@@ -5,6 +5,7 @@ import Confirmation from "./confirm-item/confirm-item";
 import { useState } from "react";
 import { useStore } from "@/store/state";
 import PrintBill from "./print-bill/print-bill";
+import Cashbalance from "./balance/cash-balanace";
 
 const items = [
   {
@@ -42,7 +43,7 @@ const InvoicePage = () => {
     // Handle order confirmation logic here
     // setItemSelected("selected");
     setItemSelected(false);
-    setShowPrintBill(true);
+    setShowCashbalance(true);
 
     console.log("Order confirmed!", itemSelected);
   };
@@ -54,6 +55,21 @@ const InvoicePage = () => {
 
   const closePrintBill = () => {
     setShowPrintBill(false);
+  };
+
+  const [showCashbalance, setShowCashbalance] = useState(false);
+
+  const closeCashbalance = () => {
+    setShowCashbalance(false);
+  };
+
+  const displayCashbalance = () => {
+    setShowCashbalance(true);
+  };
+
+  const displayPrintBill = () => {
+    setShowPrintBill(true);
+    setShowCashbalance(false);
   };
 
   return (
@@ -77,12 +93,35 @@ const InvoicePage = () => {
           <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
           <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
             <PrintBill />
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-5">
               <button
-                className="mt-4 p-2 bg-red-800 text-white rounded-3xl w-20"
+                className="mt-4 p-2 bg-red-800 text-white rounded-3xl w-40"
                 onClick={closePrintBill}
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCashbalance && (
+        <div className="fixed  inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
+          <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
+            <Cashbalance />
+            <div className="flex justify-end">
+              <button
+                className="mt-4 p-2 bg-red-800 text-white rounded-3xl w-20"
+                onClick={closeCashbalance}
+              >
+                Cancel
+              </button>
+              <button
+                className="mt-4 p-2 bg-slate-700 text-white rounded-3xl w-40"
+                onClick={displayPrintBill}
+              >
+                Proceed
               </button>
             </div>
           </div>
