@@ -1,5 +1,3 @@
-// components/OrderSummary.tsx
-
 import React, { useState } from "react";
 import Image from "next/image";
 import { useStore } from "@/store/state";
@@ -62,7 +60,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
               </div>
               <div className="flex items-center">
                 <div className="flex justify-center font-semibold rounded-lg">
-                x {item.quantity} Items
+                 Quantity:  {item.quantity}
                 </div>
 
                 {/* <select
@@ -75,7 +73,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                     </option>
                   ))}
                 </select> */}
-
 
                 <button className="ml-4 text-red-500 hover:text-red-700">
                   <svg
