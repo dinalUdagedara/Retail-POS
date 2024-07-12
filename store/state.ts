@@ -3,8 +3,10 @@ import { create } from "zustand";
 const products = [
   {
     id: 1,
+    brandName:"Hiru",
     name: "Keeri Samba",
-    size: "5",
+    size: "Medium",
+    weight:0,
     price: 1300.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
@@ -12,8 +14,10 @@ const products = [
   },
   {
     id: 2,
+    brandName:"Nipuna",
     name: "Nadu",
     size: "5",
+    weight:1,
     price: 1100.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
@@ -24,8 +28,10 @@ const products = [
 // Define the type for the state
 interface Item {
   id: number;
+  brandName: string;
   name: string;
   size: string;
+  weight:number;
   price: number;
   quantity: number;
   imageURL: string;
@@ -60,6 +66,7 @@ export const useStore = create<BearState>((set) => ({
   total:0,
   billedItems: [] as Item[],
   availableItems: products,
+  
   selectedItem: null,
   itemSelected: false,
   balanceGiven:0,
