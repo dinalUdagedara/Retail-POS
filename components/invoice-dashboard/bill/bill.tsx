@@ -43,7 +43,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {billedItems.map(
         (item, index) => (
-          ( subtotal += item.price * item.quantity),
+          (subtotal += item.isWeighting
+            ? item.price * item.weight
+            : item.price * item.quantity),
           (total = subtotal - subtotal * discount),
           (
             <div
@@ -58,32 +60,25 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
               />
               <div className="flex-1 ml-4">
                 <h3 className="text-sm font-medium">{item.name}</h3>
-             
 
-                {item.isWeighting?(
-                    <> 
-                  <p className="text-sm text-gray-500">{item.weight}kg</p>
-                    </>
-
-                  ):(
-                    <> 
-                  <p className="text-sm text-gray-500">{item.size}</p>
-                    </>
-                  )}
+                {item.isWeighting ? (
+                  <>
+                    <p className="text-sm text-gray-500">{item.weight}kg</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm text-gray-500">{item.size}</p>
+                  </>
+                )}
 
                 <p className="text-xs ">
                   Unit Price: Rs. {item.price.toFixed(2)}
                 </p>
                 <p className="text-sm font-medium">
-                  {item.isWeighting?(
-                    <> 
-                    Rs. {(item.price * item.weight).toFixed(2)}
-                    </>
-
-                  ):(
-                    <> 
-                    Rs. {(item.price * item.quantity).toFixed(2)}
-                    </>
+                  {item.isWeighting ? (
+                    <>Rs. {(item.price * item.weight).toFixed(2)}</>
+                  ) : (
+                    <>Rs. {(item.price * item.quantity).toFixed(2)}</>
                   )}
                   {/* Rs. {(item.price * item.quantity).toFixed(2)} */}
                 </p>
