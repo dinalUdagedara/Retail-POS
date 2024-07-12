@@ -9,12 +9,12 @@ interface OrderSummaryProps {
 const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   const billedItems = useStore((state) => state.billedItems);
   const setTotal = useStore((state) => state.setTotal);
-  const removeBilledItem = useStore((state) => state.removeBilledItem)
+  const removeBilledItem = useStore((state) => state.removeBilledItem);
 
   let subtotal = 0;
   let total = 0;
   let discount = 0.1;
-  console.log("Billed Items",billedItems)
+  console.log("Billed Items", billedItems);
   const handlePrint = () => {
     setTotal(total);
 
@@ -31,17 +31,17 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
     }
   };
 
-  const handleRemoveItem = (itemId:number) =>{
-    console.log("Item Removed",itemId)
-    console.log("Billed Items",billedItems)
-    removeBilledItem(itemId)
-  }
+  const handleRemoveItem = (itemId: number) => {
+    console.log("Item Removed", itemId);
+    console.log("Billed Items", billedItems);
+    removeBilledItem(itemId);
+  };
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md w-full h-full min-h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {billedItems.map(
-        (item,index) => (
+        (item, index) => (
           (subtotal += item.price * item.quantity),
           (total = subtotal - subtotal * discount),
           (
@@ -67,23 +67,12 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
               </div>
               <div className="flex items-center">
                 <div className="flex justify-center font-semibold rounded-lg">
-                 Quantity:  {item.quantity}
+                  Quantity: {item.quantity}
                 </div>
-
-                {/* <select
-                  value={item.quantity}
-                  className="block w-full py-2 text-center border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                <button
+                  onClick={() => handleRemoveItem(index)}
+                  className="ml-4 text-red-500 hover:text-red-700"
                 >
-                  {[...Array(10).keys()].map((i) => (
-                    <option key={i + 1} value={i + 1}>
-                      {i + 1}
-                    </option>
-                  ))}
-                </select> */}
-
-                <button 
-                onClick={()=>handleRemoveItem(index)}
-                className="ml-4 text-red-500 hover:text-red-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
