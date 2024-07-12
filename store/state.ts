@@ -8,6 +8,7 @@ const products = [
     price: 1300.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
+    isWeighting:false,
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const products = [
     price: 1100.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
+    isWeighting:true,
   },
 ];
 
@@ -27,6 +29,7 @@ interface Item {
   price: number;
   quantity: number;
   imageURL: string;
+  isWeighting:boolean;
 }
 
 interface BearState {

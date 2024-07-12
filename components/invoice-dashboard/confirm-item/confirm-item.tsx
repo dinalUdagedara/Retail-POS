@@ -1,14 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/store/state";
 import { SizeSelect } from "./size-select";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import Item from "antd/es/list/Item";
 import { Checkbox, InputNumber, Space } from "antd";
 
 const Confirmation = () => {
   const [keyboard, setKeyboard] = useState(true);
+  const [isWeightingItem, setIsWeightingItem] = useState(false);
 
   const [selectedProduct, setSelectedProduct] = useState([
     {
@@ -17,9 +16,11 @@ const Confirmation = () => {
       size: "",
       price: 0.0,
       quantity: 0,
-      imageURL: "/assets/hiru.jpg",
+      imageURL: "",
+      isWeighting: false,
     },
   ]);
+
   //Zustand setup
   const selectedItem = useStore((state) => state.selectedItem);
   const setBilledItems = useStore((state) => state.setBilledItems);
@@ -49,10 +50,21 @@ const Confirmation = () => {
 
     console.log("Updated product:", updatedProduct);
   }
-  if (selectedItem) {
-    updatedProduct.name = selectedItem.name ?? "";
-    updatedProduct.price = selectedItem.price ?? 0;
-  }
+  useEffect(() => {
+    if (selectedItem) {
+      if (selectedItem.isWeighting) {
+        setIsWeightingItem(true);
+        updatedProduct.quantity = 1
+      } else {
+        setIsWeightingItem(false);
+      }
+      updatedProduct.name = selectedItem.name ?? "";
+      updatedProduct.price = selectedItem.price ?? 0;
+      updatedProduct.imageURL = selectedItem.imageURL ?? "";
+    
+    }
+    setSelectedProduct([updatedProduct]);
+  }, [selectedItem]);
   return (
     <div className=" w-full p-20 pt-2">
       <form onSubmit={handleFormSubmit}>
@@ -83,73 +95,114 @@ const Confirmation = () => {
                   >
                     Number of Items
                   </label>
-                  <div>
-                    <select
-                      id="quantity"
-                      name="quantity"
-                      autoComplete="quantity"
-                      className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                      <option className="text-center">
-                        {selectedItem?.quantity}
-                      </option>
-                      <option className="text-center">2</option>
-                      <option className="text-center">3</option>
-                    </select>
-                  </div>
+
+                  {isWeightingItem ? (
+                    <div className="sm:col-span-3">
+                      <div className="items-center">
+                        <Space>
+                          <InputNumber
+                            id="quantity"
+                            name="quantity"
+                            keyboard={keyboard}
+                            defaultValue={1}
+                            className="w-14"
+                            disabled
+                          />
+                        </Space>
+                      </div>
+                    </div>
+                  ) : (
+                    // <div>
+                    //   <select
+
+                    //     id="quantity"
+                    //     name="quantity"
+                    //     autoComplete="quantity"
+                    //     className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    //   >
+                    //     <option className="text-center">1</option>
+                    //     <option className="text-center">2</option>
+                    //     <option className="text-center">3</option>
+                    //     <option className="text-center">4</option>
+                    //     <option className="text-center">5</option>
+                    //     <option className="text-center">6</option>
+                    //     <option className="text-center">7</option>
+                    //     <option className="text-center">8</option>
+                    //     <option className="text-center">9</option>
+                    //     <option className="text-center">10</option>
+                    //   </select>
+                    // </div>
+
+                    <div className="sm:col-span-3">
+                      <div className="items-center">
+                        <Space>
+                          <InputNumber
+                            id="quantity"
+                            name="quantity"
+                            keyboard={keyboard}
+                            defaultValue="1"
+                            className="w-14"
+                          />
+                          <Checkbox
+                            onChange={() => {
+                              setKeyboard(!keyboard);
+                            }}
+                            checked={keyboard}
+                          >
+                            Toggle keyboard
+                          </Checkbox>
+                        </Space>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-row justify-between mt-5 border-t p-6 pb-0">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="weight"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Weight
-                </label>
-                <div className="mt-2 items-center">
-                  {/* <select
-                      id="weight"
-                      name="weight"
-                      autoComplete="weight"
-                      className="block w-fullrounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            <div className="flex flex-row justify-center mt-5 border-t p-6 pb-0">
+              {isWeightingItem ? (
+                <>
+                  <div className="sm:col-span-3">
+                    <label
+                      htmlFor="weight"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      <option className="text-center">{item.size}</option>
-                      <option className="text-center">500g</option>
-                      <option className="text-center">1kg</option>
-                    </select> */}
-
-                  <Space>
-                    <InputNumber
-                      id="weight"
-                      name="weight"
-                      keyboard={keyboard}
-                      defaultValue={selectedItem?.size}
-                      addonAfter="Kg"
-                    />
-                    <Checkbox
-                      onChange={() => {
-                        setKeyboard(!keyboard);
-                      }}
-                      checked={keyboard}
+                      Weight
+                    </label>
+                    <div className="mt-2 items-center">
+                      <Space>
+                        <InputNumber
+                          id="weight"
+                          name="weight"
+                          keyboard={keyboard}
+                          defaultValue={selectedItem?.size}
+                          addonAfter="Kg"
+                        />
+                        <Checkbox
+                          onChange={() => {
+                            setKeyboard(!keyboard);
+                          }}
+                          checked={keyboard}
+                        >
+                          Toggle keyboard
+                        </Checkbox>
+                      </Space>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div>
+                  <div className="sm:col-span-3 ">
+                    <label
+                      htmlFor="size"
+                      className="block text-sm font-medium leading-6 text-gray-900"
                     >
-                      Toggle keyboard
-                    </Checkbox>
-                  </Space>
+                      Size
+                    </label>
+                    <SizeSelect />
+                  </div>
                 </div>
-              </div>
-
-              <div className="sm:col-span-3 ">
-                <label
-                  htmlFor="size"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Size
-                </label>
-                <SizeSelect />
-              </div>
+              )}
             </div>
           </div>
 
