@@ -54,12 +54,14 @@ const Confirmation = () => {
     if (selectedItem) {
       if (selectedItem.isWeighting) {
         setIsWeightingItem(true);
+        updatedProduct.quantity = 1
       } else {
         setIsWeightingItem(false);
       }
       updatedProduct.name = selectedItem.name ?? "";
       updatedProduct.price = selectedItem.price ?? 0;
       updatedProduct.imageURL = selectedItem.imageURL ?? "";
+    
     }
     setSelectedProduct([updatedProduct]);
   }, [selectedItem]);
@@ -93,25 +95,66 @@ const Confirmation = () => {
                   >
                     Number of Items
                   </label>
-                  <div>
-                    <select
-                      id="quantity"
-                      name="quantity"
-                      autoComplete="quantity"
-                      className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                      <option className="text-center">1</option>
-                      <option className="text-center">2</option>
-                      <option className="text-center">3</option>
-                      <option className="text-center">4</option>
-                      <option className="text-center">5</option>
-                      <option className="text-center">6</option>
-                      <option className="text-center">7</option>
-                      <option className="text-center">8</option>
-                      <option className="text-center">9</option>
-                      <option className="text-center">10</option>
-                    </select>
-                  </div>
+
+                  {isWeightingItem ? (
+                    <div className="sm:col-span-3">
+                      <div className="items-center">
+                        <Space>
+                          <InputNumber
+                            id="quantity"
+                            name="quantity"
+                            keyboard={keyboard}
+                            defaultValue={1}
+                            className="w-14"
+                            disabled
+                          />
+                        </Space>
+                      </div>
+                    </div>
+                  ) : (
+                    // <div>
+                    //   <select
+
+                    //     id="quantity"
+                    //     name="quantity"
+                    //     autoComplete="quantity"
+                    //     className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    //   >
+                    //     <option className="text-center">1</option>
+                    //     <option className="text-center">2</option>
+                    //     <option className="text-center">3</option>
+                    //     <option className="text-center">4</option>
+                    //     <option className="text-center">5</option>
+                    //     <option className="text-center">6</option>
+                    //     <option className="text-center">7</option>
+                    //     <option className="text-center">8</option>
+                    //     <option className="text-center">9</option>
+                    //     <option className="text-center">10</option>
+                    //   </select>
+                    // </div>
+
+                    <div className="sm:col-span-3">
+                      <div className="items-center">
+                        <Space>
+                          <InputNumber
+                            id="quantity"
+                            name="quantity"
+                            keyboard={keyboard}
+                            defaultValue="1"
+                            className="w-14"
+                          />
+                          <Checkbox
+                            onChange={() => {
+                              setKeyboard(!keyboard);
+                            }}
+                            checked={keyboard}
+                          >
+                            Toggle keyboard
+                          </Checkbox>
+                        </Space>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -120,47 +163,45 @@ const Confirmation = () => {
               {isWeightingItem ? (
                 <>
                   <div className="sm:col-span-3">
-                  <label
-                    htmlFor="weight"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Weight
-                  </label>
-                  <div className="mt-2 items-center">
-                    <Space>
-                      <InputNumber
-                        id="weight"
-                        name="weight"
-                        keyboard={keyboard}
-                        defaultValue={selectedItem?.size}
-                        addonAfter="Kg"
-                      />
-                      <Checkbox
-                        onChange={() => {
-                          setKeyboard(!keyboard);
-                        }}
-                        checked={keyboard}
-                      >
-                        Toggle keyboard
-                      </Checkbox>
-                    </Space>
+                    <label
+                      htmlFor="weight"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Weight
+                    </label>
+                    <div className="mt-2 items-center">
+                      <Space>
+                        <InputNumber
+                          id="weight"
+                          name="weight"
+                          keyboard={keyboard}
+                          defaultValue={selectedItem?.size}
+                          addonAfter="Kg"
+                        />
+                        <Checkbox
+                          onChange={() => {
+                            setKeyboard(!keyboard);
+                          }}
+                          checked={keyboard}
+                        >
+                          Toggle keyboard
+                        </Checkbox>
+                      </Space>
+                    </div>
                   </div>
-                </div>
                 </>
-                
               ) : (
                 <div>
                   <div className="sm:col-span-3 ">
-                  <label
-                    htmlFor="size"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Size
-                  </label>
-                  <SizeSelect />
+                    <label
+                      htmlFor="size"
+                      className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                      Size
+                    </label>
+                    <SizeSelect />
+                  </div>
                 </div>
-                </div>
-                
               )}
             </div>
           </div>
