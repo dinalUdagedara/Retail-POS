@@ -49,6 +49,7 @@ interface BearState {
   setBalanceGiven:(newBalance:number) => void;
   setAmountGiven:(newGivenAmount:number) => void;
   setBalanceEntered:(value:boolean) => void;
+  removeBilledItem: (index: number) => void;
 }
 
 export const useStore = create<BearState>((set) => ({
@@ -73,6 +74,12 @@ export const useStore = create<BearState>((set) => ({
   setTotal:(newTotal) => set ({total:newTotal}),
   setBalanceGiven:(newBalance) => set ({balanceGiven:newBalance}),
   setAmountGiven:(newGivenAmount) => set ({amountGiven:newGivenAmount}),
-  setBalanceEntered:(value) => set ({balanceEntered:value})
+  setBalanceEntered:(value) => set ({balanceEntered:value}),
+  removeBilledItem: (index) =>
+    set((state) => {
+      const updatedBilledItems = [...state.billedItems];
+      updatedBilledItems.splice(index, 1);
+      return { billedItems: updatedBilledItems };
+    }),
 
 }));
