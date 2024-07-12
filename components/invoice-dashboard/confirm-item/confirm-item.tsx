@@ -14,6 +14,7 @@ const Confirmation = () => {
       id: 1,
       name: "",
       size: "",
+      weight:0,
       price: 0.0,
       quantity: 0,
       imageURL: "",
@@ -36,7 +37,7 @@ const Confirmation = () => {
       if (key === "quantity") {
         updatedProduct.quantity = Number(value);
       } else if (key === "weight") {
-        updatedProduct.size = value.toString();
+        updatedProduct.weight = Number(value);
       } else if (key === "size") {
         updatedProduct.size = value.toString();
       }
@@ -54,6 +55,8 @@ const Confirmation = () => {
     if (selectedItem) {
       if (selectedItem.isWeighting) {
         setIsWeightingItem(true);
+        updatedProduct.isWeighting = selectedItem.isWeighting ?? false;
+        updatedProduct.weight=selectedItem.weight?? 1;
         updatedProduct.quantity = 1
       } else {
         setIsWeightingItem(false);
@@ -61,6 +64,7 @@ const Confirmation = () => {
       updatedProduct.name = selectedItem.name ?? "";
       updatedProduct.price = selectedItem.price ?? 0;
       updatedProduct.imageURL = selectedItem.imageURL ?? "";
+      updatedProduct.size = selectedItem.size ?? "";
     
     }
     setSelectedProduct([updatedProduct]);

@@ -4,7 +4,8 @@ const products = [
   {
     id: 1,
     name: "Keeri Samba",
-    size: "5",
+    size: "Medium",
+    weight:0,
     price: 1300.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
@@ -14,6 +15,7 @@ const products = [
     id: 2,
     name: "Nadu",
     size: "5",
+    weight:1,
     price: 1100.0,
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
@@ -26,6 +28,7 @@ interface Item {
   id: number;
   name: string;
   size: string;
+  weight:number;
   price: number;
   quantity: number;
   imageURL: string;
