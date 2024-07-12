@@ -3,6 +3,7 @@ import { create } from "zustand";
 const products = [
   {
     id: 1,
+    brandName:"Hiru",
     name: "Keeri Samba",
     size: "Medium",
     weight:0,
@@ -13,6 +14,7 @@ const products = [
   },
   {
     id: 2,
+    brandName:"Nipuna",
     name: "Nadu",
     size: "5",
     weight:1,
@@ -26,6 +28,7 @@ const products = [
 // Define the type for the state
 interface Item {
   id: number;
+  brandName: string;
   name: string;
   size: string;
   weight:number;
@@ -63,6 +66,7 @@ export const useStore = create<BearState>((set) => ({
   total:0,
   billedItems: [] as Item[],
   availableItems: products,
+  
   selectedItem: null,
   itemSelected: false,
   balanceGiven:0,

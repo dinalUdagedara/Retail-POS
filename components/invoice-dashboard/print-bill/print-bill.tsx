@@ -32,16 +32,25 @@ const PrintBill = () => {
         <h2 className="text-lg font-semibold mb-4">Order summary</h2>
         {billedItems.map(
           (item) => (
-            (subtotal += item.price * item.quantity),
+            (subtotal += item.isWeighting ? item.price * item.weight : item.price * item.quantity ),
             (total = subtotal - subtotal * discount),
             (
               <div
                 key={item.id}
                 className="flex items-center justify-between border-b border-gray-200 py-4"
               >
-                <div className="flex justify-start gap-10">
-                  <h3 className="text-sm font-medium">{item.name}</h3>
-                  <p className="text-sm text-gray-500">{item.size}kg</p>
+                <div className=" grid grid-cols-5 gap-10">
+      
+                  <h3 className="text-sm font-medium">
+                    {item.brandName} {item.name}
+                  </h3>
+
+                  {item.isWeighting ? (
+                    <p className="text-sm text-gray-500">{item.weight} kg</p>
+                  ) : (
+                    <p className="text-sm text-gray-500">{item.size}</p>
+                  )}
+
                   <p className="text-sm font-medium">
                     Rs. {item.price.toFixed(2)}
                   </p>

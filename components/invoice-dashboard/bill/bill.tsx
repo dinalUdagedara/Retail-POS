@@ -59,7 +59,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                 height={100}
               />
               <div className="flex-1 ml-4">
-                <h3 className="text-sm font-medium">{item.name}</h3>
+
+                <h3 className="text-sm font-medium">{item.brandName} {item.name}</h3>
 
                 {item.isWeighting ? (
                   <>

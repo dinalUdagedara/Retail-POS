@@ -7,11 +7,14 @@ import { useStore } from "@/store/state";
 
 interface Product {
   id: number;
+  brandName: string;
   name: string;
   size: string;
+  weight:number;
   price: number;
   quantity: number;
   imageURL: string;
+  isWeighting:boolean;
 }
 
 interface ItemListProps {
@@ -26,11 +29,14 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product>({
     id: 1,
-    name: "",
-    size: "",
-    price: 0.0,
-    quantity: 0,
-    imageURL: "/assets/hiru.jpg",
+      brandName:"",
+      name: "",
+      size: "",
+      weight:0,
+      price: 0.0,
+      quantity: 0,
+      imageURL: "",
+      isWeighting: false,
   });
   function handleSelectingItem(product: Product) {
     setSelectedProduct(product);

@@ -12,6 +12,7 @@ const Confirmation = () => {
   const [selectedProduct, setSelectedProduct] = useState([
     {
       id: 1,
+      brandName:"",
       name: "",
       size: "",
       weight:0,
@@ -61,6 +62,7 @@ const Confirmation = () => {
       } else {
         setIsWeightingItem(false);
       }
+      updatedProduct.brandName = selectedItem.brandName ?? "";
       updatedProduct.name = selectedItem.name ?? "";
       updatedProduct.price = selectedItem.price ?? 0;
       updatedProduct.imageURL = selectedItem.imageURL ?? "";
@@ -75,7 +77,7 @@ const Confirmation = () => {
         <div className="space-y-12  w-full ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900 ">
-              Hiru
+              {selectedItem?.brandName}
             </h2>
 
             <div className="flex justify-between">
@@ -116,27 +118,7 @@ const Confirmation = () => {
                       </div>
                     </div>
                   ) : (
-                    // <div>
-                    //   <select
-
-                    //     id="quantity"
-                    //     name="quantity"
-                    //     autoComplete="quantity"
-                    //     className="block w-[60px]  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    //   >
-                    //     <option className="text-center">1</option>
-                    //     <option className="text-center">2</option>
-                    //     <option className="text-center">3</option>
-                    //     <option className="text-center">4</option>
-                    //     <option className="text-center">5</option>
-                    //     <option className="text-center">6</option>
-                    //     <option className="text-center">7</option>
-                    //     <option className="text-center">8</option>
-                    //     <option className="text-center">9</option>
-                    //     <option className="text-center">10</option>
-                    //   </select>
-                    // </div>
-
+  
                     <div className="sm:col-span-3">
                       <div className="items-center">
                         <Space>
@@ -163,7 +145,7 @@ const Confirmation = () => {
               </div>
             </div>
 
-            <div className="flex flex-row justify-center mt-5 border-t p-6 pb-0">
+            <div className="flex flex-row justify-center mt-5 border-t p-6 pb-0 ">
               {isWeightingItem ? (
                 <>
                   <div className="sm:col-span-3">
@@ -199,11 +181,11 @@ const Confirmation = () => {
                   <div className="sm:col-span-3 ">
                     <label
                       htmlFor="size"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      className="block  text-base font-semibold leading-6 text-gray-900"
                     >
-                      Size
+                      Size :  {selectedItem?.size}
                     </label>
-                    <SizeSelect />
+            
                   </div>
                 </div>
               )}
