@@ -7,7 +7,9 @@ import { useStore } from "@/store/state";
 import PrintBill from "./print-bill/print-bill";
 import Cashbalance from "./balance/cash-balanace";
 
+
 const InvoicePage = () => {
+  
   const itemSelected = useStore((state) => state.itemSelected);
 
   const amountGiven = useStore((state) => state.amountGiven);
