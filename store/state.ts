@@ -25,6 +25,8 @@ const products = [
   },
 ];
 
+
+
 // Define the type for the state
 interface Item {
   id: number;

@@ -15,7 +15,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   let subtotal = 0;
   let total = 0;
   let discount = 0.1;
-  console.log("Billed Items", billedItems);
+
   const handlePrint = () => {
     setTotal(total);
 
