@@ -63,13 +63,15 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   }
 
   useEffect(() => {
+    //fetching data from the route handler
+
     const fetchProducts = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/products");
-
         const products: Product[] = await response.json();
-        // updateAvailableProducts(products)
-        console.log("products", products);
+
+        //updating the zustand state of products
+        updateAvailableProducts(products);
       } catch (error) {
         console.log("Error", error);
       }
@@ -77,6 +79,9 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
 
     fetchProducts();
   }, []);
+
+
+  
   return (
     <div className="bg-white w-full ">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8 w-full ">

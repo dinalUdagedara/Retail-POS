@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useStore } from "@/store/state";
-import { SizeSelect } from "./size-select";
+
 import Image from "next/image";
 import { Checkbox, InputNumber, Space } from "antd";
 
@@ -12,10 +12,10 @@ const Confirmation = () => {
   const [selectedProduct, setSelectedProduct] = useState([
     {
       id: "1",
-      brandName:"",
+      brandName: "",
       name: "",
       size: "",
-      weight:0,
+      weight: 0,
       price: 0.0,
       quantity: 0,
       imageURL: "",
@@ -57,8 +57,8 @@ const Confirmation = () => {
       if (selectedItem.isWeighting) {
         setIsWeightingItem(true);
         updatedProduct.isWeighting = selectedItem.isWeighting ?? false;
-        updatedProduct.weight=selectedItem.weight?? 1;
-        updatedProduct.quantity = 1
+        updatedProduct.weight = selectedItem.weight ?? 1;
+        updatedProduct.quantity = 1;
       } else {
         setIsWeightingItem(false);
       }
@@ -67,7 +67,6 @@ const Confirmation = () => {
       updatedProduct.price = selectedItem.price ?? 0;
       updatedProduct.imageURL = selectedItem.imageURL ?? "";
       updatedProduct.size = selectedItem.size ?? "";
-    
     }
     setSelectedProduct([updatedProduct]);
   }, [selectedItem]);
@@ -118,7 +117,6 @@ const Confirmation = () => {
                       </div>
                     </div>
                   ) : (
-  
                     <div className="sm:col-span-3">
                       <div className="items-center">
                         <Space>
@@ -183,9 +181,8 @@ const Confirmation = () => {
                       htmlFor="size"
                       className="block  text-base font-semibold leading-6 text-gray-900"
                     >
-                      Size :  {selectedItem?.size}
+                      Size : {selectedItem?.size}
                     </label>
-            
                   </div>
                 </div>
               )}

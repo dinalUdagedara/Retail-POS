@@ -1,4 +1,4 @@
-
+//example use of data instead of real database
 export const comments = [
     {
         id:1,
