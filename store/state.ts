@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const products = [
   {
-    id: 1,
+    id: "1",
     brandName:"Hiru",
     name: "Keeri Samba",
     size: "Medium",
@@ -13,7 +13,7 @@ const products = [
     isWeighting:false,
   },
   {
-    id: 2,
+    id: "2",
     brandName:"Nipuna",
     name: "Nadu",
     size: "5",
@@ -28,8 +28,8 @@ const products = [
 
 
 // Define the type for the state
-interface Item {
-  id: number;
+export interface Item {
+  id: string;
   brandName: string;
   name: string;
   size: string;
@@ -61,13 +61,17 @@ interface BearState {
   setAmountGiven:(newGivenAmount:number) => void;
   setBalanceEntered:(value:boolean) => void;
   removeBilledItem: (index: number) => void;
+  updateProducts: (items: Item[]) => void;
 }
 
 export const useStore = create<BearState>((set) => ({
   bears: 10,
   total:0,
   billedItems: [] as Item[],
+
+
   availableItems: products,
+  // availableItems:[],
   
   selectedItem: null,
   itemSelected: false,
@@ -93,5 +97,8 @@ export const useStore = create<BearState>((set) => ({
       updatedBilledItems.splice(index, 1);
       return { billedItems: updatedBilledItems };
     }),
+    updateProducts: (items) => set({ availableItems: items }),
 
 }));
+
+
