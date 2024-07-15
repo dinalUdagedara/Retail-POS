@@ -32,7 +32,9 @@ const PrintBill = () => {
         <h2 className="text-lg font-semibold mb-4">Order summary</h2>
         {billedItems.map(
           (item) => (
-            (subtotal += item.isWeighting ? item.price * item.weight : item.price * item.quantity ),
+            (subtotal += item.isWeighting
+              ? item.price * item.weight
+              : item.price * item.quantity),
             (total = subtotal - subtotal * discount),
             (
               <div
@@ -40,7 +42,6 @@ const PrintBill = () => {
                 className="flex items-center justify-between border-b border-gray-200 py-4"
               >
                 <div className=" grid grid-cols-5 gap-10">
-      
                   <h3 className="text-sm font-medium">
                     {item.brandName} {item.name}
                   </h3>
@@ -57,9 +58,15 @@ const PrintBill = () => {
 
                   <p className="text-sm font-medium">x {item.quantity}</p>
                 </div>
-                <div className="flex items-center">
-                  Rs.{(item.price * item.quantity).toFixed(2)}
-                </div>
+                {item.isWeighting ? (
+                  <div className="flex items-center">
+                    Rs.{(item.price * item.weight).toFixed(2)}
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    Rs.{(item.price * item.quantity).toFixed(2)}
+                  </div>
+                )}
               </div>
             )
           )
