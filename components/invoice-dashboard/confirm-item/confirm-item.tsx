@@ -11,7 +11,7 @@ const Confirmation = () => {
 
   const [selectedProduct, setSelectedProduct] = useState([
     {
-      id: 1,
+      id: "1",
       brandName:"",
       name: "",
       size: "",

@@ -16,7 +16,7 @@ const products = [
     id: "2",
     brandName:"Nipuna",
     name: "Nadu",
-    size: "5",
+    size: "",
     weight:1,
     price: 1100.0,
     quantity: 2,

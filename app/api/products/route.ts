@@ -14,16 +14,13 @@ export interface Item {
   }
 
 export const fetchProducts = async ()=>{
-    const posts = await prisma.post.findMany();
+//Fetch data from the database to the server
     const items:Item[] = await prisma.item.findMany();
-    {items.map((item)=>{
-        console.log("item",item.brandName)
-    })}
     return items
 }
+//Getting all the Products in the  database
 export async function GET() {
     const fetchedProducts = await fetchProducts()
-    console.log("fetchedItems",fetchedProducts)
   return Response.json(fetchedProducts);
 }
 
