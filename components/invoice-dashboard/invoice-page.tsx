@@ -7,13 +7,11 @@ import { useStore } from "@/store/state";
 import PrintBill from "./print-bill/print-bill";
 import Cashbalance from "./balance/cash-balanace";
 
-
 const InvoicePage = () => {
-  
   const itemSelected = useStore((state) => state.itemSelected);
 
   const amountGiven = useStore((state) => state.amountGiven);
-  
+
   const balanceEntered = useStore((state) => state.balanceEntered);
   const setBalanceEntered = useStore((state) => state.setBalanceEntered);
 
@@ -54,11 +52,10 @@ const InvoicePage = () => {
   const displayPrintBill = () => {
     setShowPrintBill(true);
     setShowCashbalance(false);
-    setBalanceEntered(false)
+    setBalanceEntered(false);
   };
 
   return (
-    
     <div>
       <div className="flex flex-row justify-between w-full h-full ">
         <div className="hidden w-full sm:flex justify-center">
@@ -103,13 +100,14 @@ const InvoicePage = () => {
               >
                 Cancel
               </button>
-              
+
               <button
                 className={`${
                   balanceEntered === false
-                    ? 'bg-slate-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-slate-700 hover:bg-slate-500 text-white'
-                } rounded-3xl p-2 mt-4 w-[100px]`} onClick={displayPrintBill}
+                    ? "bg-slate-300 text-gray-500 cursor-not-allowed"
+                    : "bg-slate-700 hover:bg-slate-500 text-white"
+                } rounded-3xl p-2 mt-4 w-[100px]`}
+                onClick={displayPrintBill}
                 disabled={balanceEntered === false}
               >
                 Proceed
