@@ -40,11 +40,28 @@ export async function POST(request: Request) {
     imageURL: product.imageURL,
     isWeighting: product.isWeighting,
   };
-  products.push(newProduct);
-  return new Response(JSON.stringify(newProduct), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    status: 201,
-  });
+  try {
+    const addNewProduct = await prisma.item.create({
+      data: newProduct,
+    });
+
+    // Optionally update the local products array
+    products.push(newProduct);
+
+    return new Response(JSON.stringify(addNewProduct), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      status: 201,
+    });
+  } catch (error) {
+    console.error("Error creating product:", error);
+    return new Response(JSON.stringify({ error: "Error creating product" }), {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      status: 500,
+    });
+  }
+  
 }
