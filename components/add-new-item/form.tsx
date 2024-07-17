@@ -1,12 +1,36 @@
-
+"use client"
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { FormEvent } from "react";
 
 export default function Form() {
+
+   function onSubmit(event: FormEvent<HTMLFormElement>) {
+
+    event.preventDefault(); 
+    const formData = new FormData(event.currentTarget);
+    const brandName = formData.get("brandName");
+    const name = formData.get("productName");
+    const size = formData.get("size");
+    const weight = formData.get("weight");
+    const price = formData.get("price");
+    const quantity = formData.get("quantity");
+    const imageURL = formData.get("imgURL");
+    const isWeighting = formData.get("isWeightable");
+
+    console.log("form is submitted")
+    console.log("name",name)
+    console.log("size",size)
+    console.log("weight",weight)
+    console.log("price",price)
+    console.log("quantity",quantity)
+    console.log("imageURL",imageURL)
+    console.log("isWeighting",isWeighting)
+  }
   return (
     <div className="w-full flex justify-center ">
 
 
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="space-y-12 flex justify-center ">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -16,7 +40,7 @@ export default function Form() {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="brandName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Brand Name
@@ -24,11 +48,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="brandName"
+                    name="brandName"
                     type="text"
                     placeholder="Enter the Brand Name here"
-                    autoComplete="username"
+                    autoComplete="brandName"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -37,7 +61,7 @@ export default function Form() {
 
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="productName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Product Name
@@ -45,11 +69,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="productName"
+                    name="productName"
                     type="text"
                     placeholder="Enter the Product Name here"
-                    autoComplete="username"
+                    autoComplete="productName"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -59,14 +83,14 @@ export default function Form() {
             <div className="flex gap-4 sm:col-span-4">
               <div className="flex h-6 items-center">
                 <input
-                  id="comments"
-                  name="comments"
+                  id="isWeightable"
+                  name="isWeightable"
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                 />
               </div>
               <div className="text-sm leading-6">
-                <label htmlFor="comments" className="font-medium text-gray-900">
+                <label htmlFor="isWeightable" className="font-medium text-gray-900">
                   Weightable Item
                 </label>
                 <p className="text-gray-500">
@@ -78,7 +102,7 @@ export default function Form() {
             {/* Only Enable if product is not weightable */}
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="size"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Size
@@ -86,11 +110,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="size"
+                    name="size"
                     type="text"
                     placeholder="Enter the Size"
-                    autoComplete="username"
+                    autoComplete="size"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -101,7 +125,7 @@ export default function Form() {
 
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="weight"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Weight
@@ -109,11 +133,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="weight"
+                    name="weight"
                     type="text"
                     placeholder="Enter the Weight"
-                    autoComplete="username"
+                    autoComplete="weight"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -143,7 +167,7 @@ export default function Form() {
 
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="quantity"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Quantity
@@ -151,11 +175,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="quantity"
+                    name="quantity"
                     type="text"
                     placeholder="Enter the no.of products adding"
-                    autoComplete="username"
+                    autoComplete="quantity"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -164,7 +188,7 @@ export default function Form() {
 
             <div className="sm:col-span-4">
               <label
-                htmlFor="username"
+                htmlFor="imgURL"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Image URL
@@ -172,11 +196,11 @@ export default function Form() {
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
-                    id="username"
-                    name="username"
+                    id="imgURL"
+                    name="imgURL"
                     type="text"
                     placeholder="Enter the Image URL in here"
-                    autoComplete="username"
+                    autoComplete="imgURL"
                     className="block ml-2 flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
