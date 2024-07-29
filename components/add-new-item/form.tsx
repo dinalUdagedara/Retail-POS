@@ -1,38 +1,68 @@
 "use client";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { FormEvent, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-export default function Form() {
+interface Item {
+  id: string;
+  brandName: string;
+  name: string;
+  size: string;
+  weight: number;
+  price: number;
+  quantity: number;
+  imageURL: string;
+  isWeighting: boolean;
+}
+
+export default function Form({
+  onSubmit,
+}: {
+  onSubmit: (productData: Item) => void;
+}) {
   const [isWeightable, setIsWeightable] = useState(false);
 
   const handleIsCheckBoxChange = (e: any) => {
     setIsWeightable(e.target.checked);
   };
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // ... extract form data as before
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const brandName = formData.get("brandName");
-    const name = formData.get("productName");
-    const size = formData.get("size");
-    const weight = formData.get("weight");
-    const price = formData.get("price");
-    const quantity = formData.get("quantity");
-    const imageURL = formData.get("imgURL");
-    const isWeighting = formData.get("isWeightable");
+    // Create product object
+    const product: Item = {
+      id: uuidv4(), // Assuming static ID or you can generate a unique ID
+      brandName: formData.get("brandName")?.toString() || "",
+      name: formData.get("productName")?.toString() || "",
+      size: formData.get("size")?.toString() || " ",
+      weight: Number(formData.get("weight")) || 0,
+      price: Number(formData.get("price")),
+      quantity: Number(formData.get("quantity")),
+      imageURL: formData.get("imgURL")?.toString() || "",
+      isWeighting: formData.get("isWeightable") === "true",
+    };
 
-    console.log("form is submitted");
-    console.log("BrandName", brandName);
-    console.log("name", name);
-    console.log("size", size);
-    console.log("weight", weight);
-    console.log("price", price);
-    console.log("quantity", quantity);
-    console.log("imageURL", imageURL);
-    console.log("isWeighting", isWeightable);
+    // Validation (Optional)
+    if (
+      !product.brandName ||
+      !product.name ||
+      product.price <= 0 ||
+      product.quantity <= 0 ||
+      (!product.isWeighting && !product.size) ||
+      (product.isWeighting && product.weight <= 0)
+    ) {
+      console.error("Validation error: Check required fields.");
+      return;
+    }
+
+    // Call the prop function with product object
+    onSubmit(product);
   }
+
   return (
     <div className="w-full flex justify-center ">
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="space-y-12 flex justify-center ">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -106,12 +136,11 @@ export default function Form() {
                 </div>
               </div>
 
-         
               {isWeightable ? (
-                 <div className="sm:col-span-4">
+                <div className="sm:col-span-4">
                   {/* Only Enabled if the item is weightable  */}
 
-                  <div >
+                  <div>
                     <label
                       htmlFor="weight"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -138,10 +167,9 @@ export default function Form() {
                   </div>
                 </div>
               ) : (
-
-                //   Only Enable if product is not weightable 
+                //   Only Enable if product is not weightable
                 <div className="sm:col-span-4">
-                  <div >
+                  <div>
                     <label
                       htmlFor="size"
                       className="block text-sm font-medium leading-6 text-gray-900"
@@ -239,7 +267,7 @@ export default function Form() {
                 >
                   Cover photo
                 </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                {/* <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
                     <PhotoIcon
                       aria-hidden="true"
@@ -264,7 +292,7 @@ export default function Form() {
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
