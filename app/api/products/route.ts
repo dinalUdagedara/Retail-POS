@@ -1,6 +1,4 @@
-//used only for updating the datasbase
 import { products } from "./data";
-
 import prisma from "@/lib/db";
 
 export interface Item {
@@ -16,31 +14,54 @@ export interface Item {
 }
 
 export const fetchProducts = async () => {
-  //Fetch data from the database to the server
+  // Fetch data from the database to the server
   const items: Item[] = await prisma.item.findMany();
   return items;
 };
-//Getting all the Products in the  database
+
+// Getting all the Products in the database
 export async function GET() {
   const fetchedProducts = await fetchProducts();
-  return Response.json(fetchedProducts);
+  return new Response(JSON.stringify(fetchedProducts), {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    status: 200,
+  });
 }
 
-// function to update the server but this wont update the databse find a way to update the database
+// Function to update the server and the database
 export async function POST(request: Request) {
-  const product = await request.json();
-  const newProduct: Item = {
-    id: product.id,
-    brandName: product.brandName,
-    name: product.name,
-    size: product.size,
-    weight: product.weight,
-    price: product.price,
-    quantity: product.quantity,
-    imageURL: product.imageURL,
-    isWeighting: product.isWeighting,
-  };
   try {
+    const product = await request.json();
+    const newProduct: Item = {
+      id: product.id,
+      brandName: product.brandName,
+      name: product.name,
+      size: product.size,
+      weight: product.weight,
+      price: product.price,
+      quantity: product.quantity,
+      imageURL: product.imageURL,
+      isWeighting: product.isWeighting,
+    };
+
+    // Validate newProduct data structure
+    if (
+      !newProduct.id ||
+      !newProduct.brandName ||
+      !newProduct.name ||
+      !newProduct.size ||
+      !newProduct.imageURL
+    ) {
+      return new Response(JSON.stringify({ error: "Invalid product data" }), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        status: 400,
+      });
+    }
+
     const addNewProduct = await prisma.item.create({
       data: newProduct,
     });
@@ -56,12 +77,13 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Error creating product:", error);
-    return new Response(JSON.stringify({ error: "Error creating product" }), {
+
+    // Return the detailed error message in the response
+    return new Response(JSON.stringify({ error: error }), {
       headers: {
         "Content-Type": "application/json",
       },
       status: 500,
     });
   }
-  
 }
