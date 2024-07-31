@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
 import { products } from "@/app/api/products/data";
+import { sampleProducts } from "@/lib/data";
 
 interface Product {
   id: string;
@@ -21,6 +22,8 @@ interface Product {
 interface ItemListProps {
   onSelection: () => void;
 }
+
+const sampleData = sampleProducts;
 
 const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   const availableItems = useStore((state) => state.availableItems);
@@ -69,12 +72,19 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     const fetchProducts = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/products");
-        const products: Product[] = await response.json();
 
-        //updating the zustand state of products
-        updateAvailableProducts(products);
+        if(response){
+          const products: Product[] = await response.json();
+          //updating the zustand state of products
+          updateAvailableProducts(products);
+        }else{
+          updateAvailableProducts(sampleData);
+        }
+
+   
       } catch (error) {
         console.log("Error", error);
+        updateAvailableProducts(sampleData);
       }
     };
 
