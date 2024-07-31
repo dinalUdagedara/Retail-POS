@@ -1,6 +1,6 @@
 import { products } from "./data";
 import prisma from "@/lib/db";
-
+import { fetchProducts } from "@/lib/actions";
 export interface Item {
   id: string;
   brandName: string;
@@ -13,11 +13,11 @@ export interface Item {
   isWeighting: boolean;
 }
 
-export const fetchProducts = async () => {
-  // Fetch data from the database to the server
-  const items: Item[] = await prisma.item.findMany();
-  return items;
-};
+// export const fetchProducts = async (): Promise<Item[]> => {
+//   // Fetch data from the database to the server
+//   const items: Item[] = await prisma.item.findMany();
+//   return items;
+// };
 
 // Getting all the Products in the database
 export async function GET() {

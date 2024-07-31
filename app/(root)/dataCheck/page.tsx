@@ -9,7 +9,7 @@ export default async function DatabseCheck() {
     <div>
       Databse Posts
       {items.map((item) => (
-        <div className="flex flex-col justify-center items-center">
+        <div key={item.id} className="flex flex-col justify-center items-center">
           <div>{item.brandName}</div>
 
           <div>{item.name}</div>
