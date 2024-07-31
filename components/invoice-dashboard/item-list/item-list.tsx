@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
+import { products } from "@/app/api/products/data";
 
 interface Product {
   id: string;
@@ -78,7 +79,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     };
 
     fetchProducts();
-  }, []);
+  }, [updateAvailableProducts]);
 
 
   

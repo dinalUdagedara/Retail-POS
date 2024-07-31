@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useStore } from "@/store/state";
 
 import Image from "next/image";
@@ -28,7 +28,32 @@ const Confirmation = () => {
   const setBilledItems = useStore((state) => state.setBilledItems);
   const setItemSelected = useStore((state) => state.setItemSelected);
 
-  const updatedProduct = { ...selectedProduct[0] };
+ // Memoize updatedProduct
+ const updatedProduct = useMemo(() => {
+  const product = { ...selectedProduct[0] };
+
+  if (selectedItem) {
+    if (selectedItem.isWeighting) {
+      setIsWeightingItem(true);
+      product.isWeighting = selectedItem.isWeighting ?? false;
+      product.weight = selectedItem.weight ?? 1;
+      product.quantity = 1;
+    } else {
+      setIsWeightingItem(false);
+    }
+    product.brandName = selectedItem.brandName ?? "";
+    product.name = selectedItem.name ?? "";
+    product.price = selectedItem.price ?? 0;
+    product.imageURL = selectedItem.imageURL ?? "";
+    product.size = selectedItem.size ?? "";
+  }
+
+  return product;
+}, [selectedItem, selectedProduct]);
+
+useEffect(() => {
+  setSelectedProduct([updatedProduct]);
+}, [updatedProduct]);
 
   function handleFormSubmit(event: any) {
     event.preventDefault();
@@ -69,7 +94,7 @@ const Confirmation = () => {
       updatedProduct.size = selectedItem.size ?? "";
     }
     setSelectedProduct([updatedProduct]);
-  }, [selectedItem]);
+  }, [selectedItem, updatedProduct]);;
   return (
     <div className=" w-full p-20 pt-2">
       <form onSubmit={handleFormSubmit}>
