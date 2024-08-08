@@ -1,6 +1,5 @@
 import InvoicePageComponent from "@/components/invoice-dashboard/invoice-page";
 
-
 const InvoicePage = () => {
   return (
     <div>
