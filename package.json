@@ -2,10 +2,12 @@
   "name": "pos-for-shop",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
+    "electron": "electron .",
     "lint": "next lint"
   },
   "dependencies": {
@@ -20,6 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "electron": "^31.3.1",
     "lucide-react": "^0.403.0",
     "next": "14.2.4",
     "react": "^18",
@@ -37,6 +40,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
+    "electron-is-dev": "^3.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8",
