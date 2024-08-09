@@ -17,6 +17,7 @@ interface Product {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
+  barcode: string;
 }
 
 interface ItemListProps {
@@ -42,6 +43,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     quantity: 0,
     imageURL: "",
     isWeighting: false,
+    barcode: "",
   });
   function handleSelectingItem(product: Product) {
     setSelectedProduct(product);
@@ -53,6 +55,20 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     const filtereditems: Product[] = availableItems.filter((item) =>
       item.name.toLowerCase().includes(name.toLowerCase())
     );
+    console.log("results", filtereditems);
+    setFilteredItems(filtereditems);
+    return filtereditems;
+  }
+
+  function searchBythebarcode(barcode:string){
+    console.log("avaialable items ",availableItems)
+    console.log("bar Code ",barcode)
+
+    const filtereditems: Product[] = availableItems.filter((item) =>
+      item.barcode?.toLowerCase().includes(barcode.toLowerCase())
+    )
+    ;
+
     console.log("results", filtereditems);
     setFilteredItems(filtereditems);
     return filtereditems;
@@ -73,15 +89,13 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
       try {
         const response = await fetch("http://localhost:3000/api/products");
 
-        if(response){
+        if (response) {
           const products: Product[] = await response.json();
           //updating the zustand state of products
           updateAvailableProducts(products);
-        }else{
+        } else {
           updateAvailableProducts(sampleData);
         }
-
-   
       } catch (error) {
         console.log("Error", error);
         updateAvailableProducts(sampleData);
@@ -91,8 +105,6 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     fetchProducts();
   }, [updateAvailableProducts]);
 
-
-  
   return (
     <div className="bg-white w-full ">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8 w-full ">
@@ -107,7 +119,8 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
             />
             <button
               onClick={() => {
-                handleSearchItems(searchValue);
+                // handleSearchItems(searchValue);
+                searchBythebarcode(searchValue);
               }}
             >
               <FaSearch className="absolute left-3 top-3 text-gray-400" />

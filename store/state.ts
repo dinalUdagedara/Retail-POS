@@ -1,30 +1,4 @@
 import { create } from "zustand";
-
-const products = [
-  {
-    id: "1",
-    brandName: "Hiru",
-    name: "Keeri Samba",
-    size: "Medium",
-    weight: 0,
-    price: 1300.0,
-    quantity: 2,
-    imageURL: "/assets/hiru.jpg",
-    isWeighting: false,
-  },
-  {
-    id: "2",
-    brandName: "Nipuna",
-    name: "Nadu",
-    size: "",
-    weight: 1,
-    price: 1100.0,
-    quantity: 2,
-    imageURL: "/assets/hiru.jpg",
-    isWeighting: true,
-  },
-];
-
 // Define the type for the state
 export interface Item {
   id: string;
@@ -36,6 +10,7 @@ export interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
+  barcode:string;
 }
 
 interface BearState {

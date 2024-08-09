@@ -13,7 +13,7 @@ interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
-  barCode: string;
+  barcode: string;
 }
 
 export default function Form({
@@ -42,7 +42,7 @@ export default function Form({
       quantity: Number(formData.get("quantity")),
       imageURL: formData.get("imgURL")?.toString() || "",
       isWeighting: formData.get("isWeightable") === "true",
-      barCode: formData.get("barCode")?.toString() || " ",
+      barcode: formData.get("barcode")?.toString() || " ",
     };
 
     // Validation (Optional)
@@ -266,7 +266,7 @@ export default function Form({
 
               <div className="sm:col-span-4">
                 <label
-                  htmlFor="barCode"
+                  htmlFor="barcode"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Bar Code
@@ -274,11 +274,11 @@ export default function Form({
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
-                      id="barCode"
-                      name="barCode"
+                      id="barcode"
+                      name="barcode"
                       type="text"
                       placeholder="Enter the Image URL in here"
-                      autoComplete="barCode"
+                      autoComplete="barcode"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>

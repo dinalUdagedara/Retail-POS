@@ -11,7 +11,7 @@ export interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
-  barCode: string;
+  barcode: string;
 }
 
 // export const fetchProducts = async (): Promise<Item[]> => {
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       quantity: product.quantity,
       imageURL: product.imageURL,
       isWeighting: product.isWeighting,
-      barCode: product.barCode,
+      barcode: product.barcode,
     };
 
   
