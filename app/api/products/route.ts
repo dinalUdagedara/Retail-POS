@@ -11,6 +11,7 @@ export interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
+  barCode: string;
 }
 
 // export const fetchProducts = async (): Promise<Item[]> => {
@@ -32,6 +33,7 @@ export async function GET() {
 
 // Function to update the server and the database
 export async function POST(request: Request) {
+  
   try {
     const product = await request.json();
     const newProduct: Item = {
@@ -44,8 +46,10 @@ export async function POST(request: Request) {
       quantity: product.quantity,
       imageURL: product.imageURL,
       isWeighting: product.isWeighting,
+      barCode: product.barCode,
     };
 
+  
     // Validate newProduct data structure
     if (
       !newProduct.id ||
