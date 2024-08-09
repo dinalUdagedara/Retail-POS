@@ -1,4 +1,4 @@
-import { products } from "./data";
+import { sampleProducts } from "@/lib/data";
 import prisma from "@/lib/db";
 import { fetchProducts } from "@/lib/actions";
 export interface Item {
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     });
 
     // Optionally update the local products array
-    products.push(newProduct);
+    sampleProducts.push(newProduct);
 
     return new Response(JSON.stringify(addNewProduct), {
       headers: {

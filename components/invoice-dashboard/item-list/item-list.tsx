@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
-import { products } from "@/app/api/products/data";
-import { sampleProducts } from "@/lib/data";
+import { sampleProducts,sampleProduct } from "@/lib/data";
 
 interface Product {
   id: string;
@@ -33,18 +32,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   const [searchValue, setSearchValue] = useState("");
   const updateAvailableProducts = useStore((state) => state.updateProducts);
 
-  const [selectedProduct, setSelectedProduct] = useState<Product>({
-    id: "1",
-    brandName: "",
-    name: "",
-    size: "",
-    weight: 0,
-    price: 0.0,
-    quantity: 0,
-    imageURL: "",
-    isWeighting: false,
-    barcode: "",
-  });
+  const [selectedProduct, setSelectedProduct] = useState<Product>(sampleProduct);
   function handleSelectingItem(product: Product) {
     setSelectedProduct(product);
     setSelectedItem(product); // Assuming setSelectedItem is a function to set the selected item in the store
@@ -53,22 +41,9 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
 
   function handleSearchItems(name: string) {
     const filtereditems: Product[] = availableItems.filter((item) =>
-      item.name.toLowerCase().includes(name.toLowerCase())
+      item.name.toLowerCase().includes(name.toLowerCase()) ||   item.barcode === name
     );
-    console.log("results", filtereditems);
-    setFilteredItems(filtereditems);
-    return filtereditems;
-  }
-
-  function searchBythebarcode(barcode:string){
-    console.log("avaialable items ",availableItems)
-    console.log("bar Code ",barcode)
-
-    const filtereditems: Product[] = availableItems.filter((item) =>
-      item.barcode?.toLowerCase().includes(barcode.toLowerCase())
-    )
-    ;
-
+    
     console.log("results", filtereditems);
     setFilteredItems(filtereditems);
     return filtereditems;
@@ -118,9 +93,8 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
               onChange={handleSearchInputChange}
             />
             <button
-              onClick={() => {
-                // handleSearchItems(searchValue);
-                searchBythebarcode(searchValue);
+              onClick={() => {  
+                handleSearchItems(searchValue);
               }}
             >
               <FaSearch className="absolute left-3 top-3 text-gray-400" />
