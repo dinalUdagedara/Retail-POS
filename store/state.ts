@@ -23,6 +23,7 @@ interface BearState {
   amountGiven: number;
   balanceGiven: number;
   balanceEntered: boolean;
+  barcode:string | null;
   increasePopulation: () => void;
   removeAllBears: () => void;
   updateBears: (newBears: number) => void;
@@ -35,6 +36,7 @@ interface BearState {
   setBalanceEntered: (value: boolean) => void;
   removeBilledItem: (index: number) => void;
   updateProducts: (items: Item[]) => void;
+  setbarcode:(newBarCode: string) => void;
 }
 
 export const useStore = create<BearState>((set) => ({
@@ -50,6 +52,7 @@ export const useStore = create<BearState>((set) => ({
   balanceGiven: 0,
   amountGiven: 0,
   balanceEntered: false,
+  barcode:null,
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
@@ -70,4 +73,5 @@ export const useStore = create<BearState>((set) => ({
       return { billedItems: updatedBilledItems };
     }),
   updateProducts: (items) => set({ availableItems: items }),
+  setbarcode: (newBarcode) => set({ barcode: newBarcode }),
 }));

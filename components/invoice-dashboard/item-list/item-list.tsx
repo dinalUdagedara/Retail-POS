@@ -31,6 +31,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   const [filteredItems, setFilteredItems] = useState<Product[] | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const updateAvailableProducts = useStore((state) => state.updateProducts);
+  const barCode = useStore ((state)=>state.barcode)
 
   const [selectedProduct, setSelectedProduct] = useState<Product>(sampleProduct);
   function handleSelectingItem(product: Product) {
@@ -102,8 +103,11 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
           </div>
         </div>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 ">
-          Items
+          Items   
         </h2>
+        <h1>
+          BarCode Scanned = {barCode}
+        </h1>
         {filteredItems ? (
           filteredItems.length > 0 ? (
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
