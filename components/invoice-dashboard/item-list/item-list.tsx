@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { useStore } from "@/store/state";
-import { sampleProducts,sampleProduct } from "@/lib/data";
+import { sampleProducts, sampleProduct } from "@/lib/data";
+import BarcodeScanner from "../barcode-scanner/barcode-scanner";
+import { TextResult } from "dynamsoft-javascript-barcode";
+import React from "react";
+import { Button } from "antd";
 
 interface Product {
   id: string;
@@ -16,7 +20,7 @@ interface Product {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
-  barcode: string;
+  barCode: string;
 }
 
 interface ItemListProps {
@@ -25,15 +29,21 @@ interface ItemListProps {
 
 const sampleData = sampleProducts;
 
-const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
+export async function BarCodeScanner() {
+  let license: string | undefined = process.env.DBRLicense;
+  return { props: { license: license } };
+}
+
+export default function ItemList({ onSelection }: ItemListProps, props: any) {
   const availableItems = useStore((state) => state.availableItems);
   const setSelectedItem = useStore((state) => state.setSelectedItem);
   const [filteredItems, setFilteredItems] = useState<Product[] | null>(null);
   const [searchValue, setSearchValue] = useState("");
   const updateAvailableProducts = useStore((state) => state.updateProducts);
-  const barCode = useStore ((state)=>state.barcode)
+  const barCode = useStore((state) => state.barCode);
 
-  const [selectedProduct, setSelectedProduct] = useState<Product>(sampleProduct);
+  const [selectedProduct, setSelectedProduct] =
+    useState<Product>(sampleProduct);
   function handleSelectingItem(product: Product) {
     setSelectedProduct(product);
     setSelectedItem(product); // Assuming setSelectedItem is a function to set the selected item in the store
@@ -41,10 +51,12 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
   }
 
   function handleSearchItems(name: string) {
-    const filtereditems: Product[] = availableItems.filter((item) =>
-      item.name.toLowerCase().includes(name.toLowerCase()) ||   item.barcode === name
+    const filtereditems: Product[] = availableItems.filter(
+      (item) =>
+        item.name.toLowerCase().includes(name.toLowerCase()) ||
+        item.barCode === name
     );
-    
+
     console.log("results", filtereditems);
     setFilteredItems(filtereditems);
     return filtereditems;
@@ -81,6 +93,50 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
     fetchProducts();
   }, [updateAvailableProducts]);
 
+  const [isActive, setIsActive] = React.useState(false);
+  const [initialized, setInitialized] = React.useState(false);
+  const toggleScanning = () => {
+    setIsActive(!isActive);
+  };
+
+  const onScanned = (results: TextResult[]) => {
+    if (results.length > 0) {
+      let text = "";
+      for (let index = 0; index < results.length; index++) {
+        const result = results[index];
+        text =
+          text + result.barcodeFormatString + ": " + result.barcodeText + "\n";
+      }
+      alert(text);
+      setIsActive(false);
+    }
+  };
+
+  //Functions to filter products using the barcode
+  function handleSearchItemsByBarcode(barCode: string) {
+    const filtereditems: Product[] = availableItems.filter(
+      (item) => item.barCode === barCode
+    );
+    if (filtereditems) {
+      filtereditems.map((item) => { 
+        console.log(item)
+        handleSelectingItem(item);
+      });
+    }
+  }
+
+  function searchForBarCode(barCode: any) {
+    console.log("Searching for items with the barcode", barCode);
+    handleSearchItemsByBarcode(barCode);
+  }
+
+  //useEffect to load items when a camera detetted a barcode
+  useEffect(() => {
+    console.log("Barcode in the use effect", barCode);
+    searchForBarCode(barCode);
+    setIsActive(false)
+  }, [barCode]);
+
   return (
     <div className="bg-white w-full ">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6  lg:max-w-7xl lg:px-8 w-full ">
@@ -94,7 +150,7 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
               onChange={handleSearchInputChange}
             />
             <button
-              onClick={() => {  
+              onClick={() => {
                 handleSearchItems(searchValue);
               }}
             >
@@ -103,11 +159,35 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
           </div>
         </div>
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 ">
-          Items   
+          Items
         </h2>
-        <h1>
-          BarCode Scanned = {barCode}
-        </h1>
+
+        <Button
+          onClick={() => {
+            searchForBarCode(barCode);
+          }}
+        >
+          search by the barcode
+        </Button>
+
+        <div>
+          <h1>Scanned Barcode: {barCode}</h1>
+          {initialized ? (
+            <button onClick={toggleScanning}>
+              {isActive ? "Stop Scanning" : "Start Scanning"}
+            </button>
+          ) : (
+            <div>Initializing...</div>
+          )}
+          <div>
+            <BarcodeScanner
+              license={props.license}
+              onInitialized={() => setInitialized(true)}
+              isActive={isActive}
+              onScanned={(results) => onScanned(results)}
+            ></BarcodeScanner>
+          </div>
+        </div>
         {filteredItems ? (
           filteredItems.length > 0 ? (
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -209,5 +289,5 @@ const ItemList: React.FC<ItemListProps> = ({ onSelection }) => {
       </div>
     </div>
   );
-};
-export default ItemList;
+}
+// export default ItemList;

@@ -9,7 +9,7 @@ export const sampleProducts = [
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
     isWeighting: false,
-    barcode: "1",
+    barCode: "1",
   },
   {
     id: "2",
@@ -21,12 +21,12 @@ export const sampleProducts = [
     quantity: 2,
     imageURL: "/assets/hiru.jpg",
     isWeighting: true,
-    barcode: "2",
+    barCode: "2",
   },
 ];
 
 export const sampleProduct = {
-  id: "2",
+  id: "3",
   brandName: "Nipuna",
   name: "Nadu",
   size: "",
@@ -35,5 +35,5 @@ export const sampleProduct = {
   quantity: 2,
   imageURL: "/assets/hiru.jpg",
   isWeighting: true,
-  barcode: "2",
+  barCode: "2",
 };

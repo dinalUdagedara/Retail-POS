@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { useStore } from "@/store/state";
+import { sampleProducts } from "@/lib/data";
 
 import Image from "next/image";
 import { Checkbox, InputNumber, Space } from "antd";
@@ -8,20 +9,7 @@ import { Checkbox, InputNumber, Space } from "antd";
 const Confirmation = () => {
   const [keyboard, setKeyboard] = useState(true);
   const [isWeightingItem, setIsWeightingItem] = useState(false);
-
-  const [selectedProduct, setSelectedProduct] = useState([
-    {
-      id: "1",
-      brandName: "",
-      name: "",
-      size: "",
-      weight: 0,
-      price: 0.0,
-      quantity: 0,
-      imageURL: "",
-      isWeighting: false,
-    },
-  ]);
+  const [selectedProduct, setSelectedProduct] = useState(sampleProducts);
 
   //Zustand setup
   const selectedItem = useStore((state) => state.selectedItem);
@@ -41,6 +29,7 @@ const Confirmation = () => {
     } else {
       setIsWeightingItem(false);
     }
+    product.id = selectedItem.id ?? "";
     product.brandName = selectedItem.brandName ?? "";
     product.name = selectedItem.name ?? "";
     product.price = selectedItem.price ?? 0;
@@ -53,7 +42,7 @@ const Confirmation = () => {
 
 useEffect(() => {
   setSelectedProduct([updatedProduct]);
-}, [updatedProduct]);
+}, []);
 
   function handleFormSubmit(event: any) {
     event.preventDefault();
@@ -94,7 +83,7 @@ useEffect(() => {
       updatedProduct.size = selectedItem.size ?? "";
     }
     setSelectedProduct([updatedProduct]);
-  }, [selectedItem, updatedProduct]);;
+  }, []);;
   return (
     <div className=" w-full p-20 pt-2">
       <form onSubmit={handleFormSubmit}>

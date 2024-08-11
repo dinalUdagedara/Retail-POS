@@ -26,7 +26,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
   const engineResourcePath: string =
     process.env.NEXT_PUBLIC_BARCODE_ENGINE_RESOURCE_PATH || "";
 
-    const scannedBarcode = useStore ((state)=> state.barcode)
+    const scannedBarcode = useStore ((state)=> state.barCode)
     const setBarcode = useStore((state)=>state.setbarcode)
 
   React.useEffect(() => {
@@ -105,10 +105,11 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
           if (results.length > 0) {
             const scannedBarcode = results[0].barcodeText;
             setBarcode(scannedBarcode);
-            console.log("scanned Bar", scannedBarcode);
+            console.log("scanned Barcode: ", scannedBarcode);
             
             // Save the barcode value to local storage
             localStorage.setItem('scannedBarcode', scannedBarcode);
+            stopScanning()
           }
             
           }
