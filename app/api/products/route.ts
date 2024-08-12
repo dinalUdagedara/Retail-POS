@@ -73,9 +73,7 @@ export async function POST(request: Request) {
       !newProduct.imageURL
     ) {
       return new Response(JSON.stringify({ error: "Invalid product data" }), {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: corsHeaders,
         status: 400,
       });
     }
@@ -88,9 +86,7 @@ export async function POST(request: Request) {
     sampleProducts.push(newProduct);
 
     return new Response(JSON.stringify(addNewProduct), {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: corsHeaders,
       status: 201,
     });
   } catch (error) {
@@ -98,9 +94,7 @@ export async function POST(request: Request) {
 
     // Return the detailed error message in the response
     return new Response(JSON.stringify({ error: error }), {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: corsHeaders,
       status: 500,
     });
   }
