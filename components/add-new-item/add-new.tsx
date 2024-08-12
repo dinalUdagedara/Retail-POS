@@ -12,7 +12,7 @@ interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
-  barcode: string;
+  barCode: string;
 }
 
 const AddnewComponent = () => {
