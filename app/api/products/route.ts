@@ -20,17 +20,31 @@ export interface Item {
 //   return items;
 // };
 
-// Getting all the Products in the database
-export async function GET() {
-  const fetchedProducts = await fetchProducts();
-  return new Response(JSON.stringify(fetchedProducts), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    status: 200,
-  });
-}
+// CORS Headers
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*", // Allow requests from any origin
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Content-Type": "application/json",
+};
 
+
+// Fetching all the Products in the database
+export async function GET() {
+  try {
+    const fetchedProducts = await fetchProducts();
+    return new Response(JSON.stringify(fetchedProducts), {
+      headers: corsHeaders,
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return new Response(JSON.stringify({ error: "Error fetching products" }), {
+      headers: corsHeaders,
+      status: 500,
+    });
+  }
+}
 // Function to update the server and the database
 export async function POST(request: Request) {
   
@@ -90,4 +104,12 @@ export async function POST(request: Request) {
       status: 500,
     });
   }
+}
+
+// Handle OPTIONS requests for CORS preflight
+export async function OPTIONS() {
+  return new Response(null, {
+    headers: corsHeaders,
+    status: 204,
+  });
 }
