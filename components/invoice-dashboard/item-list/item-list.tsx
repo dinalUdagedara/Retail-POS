@@ -41,6 +41,9 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
   const [searchValue, setSearchValue] = useState("");
   const updateAvailableProducts = useStore((state) => state.updateProducts);
   const barCode = useStore((state) => state.barCode);
+  const [barcodeButtonTriggerd, setBarCodeButtonTriggered] = useState(false);
+  const isCameraActive = useStore((state) => state.isCameraActive);
+  const setIsCameraActive = useStore((state) => state.setCameraState);
 
   const [selectedProduct, setSelectedProduct] =
     useState<Product>(sampleProduct);
@@ -95,8 +98,12 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
 
   const [isActive, setIsActive] = React.useState(false);
   const [initialized, setInitialized] = React.useState(false);
+
   const toggleScanning = () => {
     setIsActive(!isActive);
+    setIsCameraActive(!isCameraActive)
+    console.log("is active", isActive);
+    console.log("isCameraActive", isCameraActive);
   };
 
   const onScanned = (results: TextResult[]) => {
@@ -109,6 +116,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
       }
       alert(text);
       setIsActive(false);
+      setIsCameraActive(false)
     }
   };
 
@@ -118,8 +126,8 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
       (item) => item.barCode === barCode
     );
     if (filtereditems) {
-      filtereditems.map((item) => { 
-        console.log(item)
+      filtereditems.map((item) => {
+        console.log(item);
         handleSelectingItem(item);
       });
     }
@@ -128,13 +136,15 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
   function searchForBarCode(barCode: any) {
     console.log("Searching for items with the barcode", barCode);
     handleSearchItemsByBarcode(barCode);
+    setBarCodeButtonTriggered(false);
+    setIsActive(false);
+    setIsCameraActive(false)
   }
 
   //useEffect to load items when a camera detetted a barcode
   useEffect(() => {
     console.log("Barcode in the use effect", barCode);
     searchForBarCode(barCode);
-    setIsActive(false)
   }, [barCode]);
 
   return (
@@ -161,32 +171,49 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 ">
           Items
         </h2>
-
-        <Button
-          onClick={() => {
-            searchForBarCode(barCode);
-          }}
-        >
-          search by the barcode
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/3 "
+            onClick={() => {
+              searchForBarCode(barCode);
+              setBarCodeButtonTriggered(true);
+            }}
+          >
+            Search using the barcode
+          </Button>
+        </div>
 
         <div>
-          <h1>Scanned Barcode: {barCode}</h1>
-          {initialized ? (
-            <button onClick={toggleScanning}>
-              {isActive ? "Stop Scanning" : "Start Scanning"}
-            </button>
+          {barcodeButtonTriggerd ? (
+            <div>
+              <h1 className="mt-6">Scanned Barcode: {barCode}</h1>
+
+              {initialized ? (
+                <div className="flex justify-center">
+                  <button
+                    className="m-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700  "
+                    onClick={toggleScanning}
+                  >
+                    {isCameraActive ? "Stop Scanning" : "Start Scanning"}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-center">
+                  <div>Initializing...</div>
+                </div>
+              )}
+              <div>
+                <BarcodeScanner
+                  license={props.license}
+                  onInitialized={() => setInitialized(true)}
+                  isActive={isCameraActive}
+                  onScanned={(results) => onScanned(results)}
+                ></BarcodeScanner>
+              </div>
+            </div>
           ) : (
-            <div>Initializing...</div>
+            <></>
           )}
-          <div>
-            <BarcodeScanner
-              license={props.license}
-              onInitialized={() => setInitialized(true)}
-              isActive={isActive}
-              onScanned={(results) => onScanned(results)}
-            ></BarcodeScanner>
-          </div>
         </div>
         {filteredItems ? (
           filteredItems.length > 0 ? (

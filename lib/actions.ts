@@ -10,6 +10,7 @@ export interface Item {
     quantity: number;
     imageURL: string;
     isWeighting: boolean;
+    barCode: string; 
   }
 
 export const fetchProducts = async (): Promise<Item[]> => {

@@ -29,5 +29,5 @@ model Item {
   quantity    Int
   imageURL    String
   isWeighting Boolean
-  barcode    String  @unique @default("") 
+  barCode    String  @unique @default("") 
 }

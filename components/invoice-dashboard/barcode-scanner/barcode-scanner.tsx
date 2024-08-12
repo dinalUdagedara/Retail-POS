@@ -21,6 +21,8 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
   const reader = React.useRef<BarcodeReader>();
   const interval = React.useRef<any>(null);
   const decoding = React.useRef(false);
+  const isCameraActive = useStore ((state)=>state.isCameraActive)
+  const setIsCameraActive = useStore((state)=>state.setCameraState)
 
   const license: string = process.env.NEXT_PUBLIC_BARCODE_LICENSE || "";
   const engineResourcePath: string =
@@ -77,7 +79,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
 
   const toggleCamera = () => {
     if (mounted.current) {
-      if (props.isActive) {
+      if (isCameraActive) {
         console.log("Opening camera...");
         enhancer.current?.open(true);
       } else {
@@ -90,7 +92,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
 
   React.useEffect(() => {
     toggleCamera();
-  }, [props.isActive]);
+  }, [isCameraActive]);
 
   const startScanning = () => {
     const decode = async () => {
@@ -128,6 +130,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
 
   const stopScanning = () => {
     console.log("Stopping scanning...");
+    setIsCameraActive(false)
     clearInterval(interval.current);
   };
 

@@ -18,6 +18,8 @@ const InvoicePage = () => {
   const setAmountGiven = useStore((state) => state.setAmountGiven);
 
   const setItemSelected = useStore((state) => state.setItemSelected);
+  const barCode = useStore((state)=>state.barCode)
+  const setBarCode = useStore ((state)=>state.setbarcode)
 
   const [showPrintBill, setShowPrintBill] = useState(false);
 
@@ -32,7 +34,10 @@ const InvoicePage = () => {
 
   const handleConfirmItem = () => {
     setItemSelected(true);
-    console.log("Item Selected Successfully", itemSelected);
+    console.log("Item Selected Successfully");
+    if (barCode){
+      setBarCode(null)
+    }
   };
 
   const closePrintBill = () => {
