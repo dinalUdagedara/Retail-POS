@@ -1,30 +1,4 @@
 import { create } from "zustand";
-
-const products = [
-  {
-    id: "1",
-    brandName: "Hiru",
-    name: "Keeri Samba",
-    size: "Medium",
-    weight: 0,
-    price: 1300.0,
-    quantity: 2,
-    imageURL: "/assets/hiru.jpg",
-    isWeighting: false,
-  },
-  {
-    id: "2",
-    brandName: "Nipuna",
-    name: "Nadu",
-    size: "",
-    weight: 1,
-    price: 1100.0,
-    quantity: 2,
-    imageURL: "/assets/hiru.jpg",
-    isWeighting: true,
-  },
-];
-
 // Define the type for the state
 export interface Item {
   id: string;
@@ -36,6 +10,7 @@ export interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
+  barCode:string;
 }
 
 interface BearState {
@@ -48,6 +23,8 @@ interface BearState {
   amountGiven: number;
   balanceGiven: number;
   balanceEntered: boolean;
+  barCode:string | null;
+  isCameraActive:boolean;
   increasePopulation: () => void;
   removeAllBears: () => void;
   updateBears: (newBears: number) => void;
@@ -60,6 +37,8 @@ interface BearState {
   setBalanceEntered: (value: boolean) => void;
   removeBilledItem: (index: number) => void;
   updateProducts: (items: Item[]) => void;
+  setbarcode:(newBarCode: string | null) => void;
+  setCameraState:(state: boolean)=>void;
 }
 
 export const useStore = create<BearState>((set) => ({
@@ -75,6 +54,8 @@ export const useStore = create<BearState>((set) => ({
   balanceGiven: 0,
   amountGiven: 0,
   balanceEntered: false,
+  barCode:null,
+  isCameraActive:false,
 
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
@@ -95,4 +76,6 @@ export const useStore = create<BearState>((set) => ({
       return { billedItems: updatedBilledItems };
     }),
   updateProducts: (items) => set({ availableItems: items }),
+  setbarcode: (newBarcode) => set({ barCode: newBarcode }),  
+  setCameraState: (newState) => set({ isCameraActive: newState }),
 }));

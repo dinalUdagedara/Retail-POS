@@ -12,11 +12,13 @@ interface Item {
   quantity: number;
   imageURL: string;
   isWeighting: boolean;
+  barcode: string;
 }
 
 const AddnewComponent = () => {
   const handleAddProduct = async (productData: Item) => {
     try {
+
       const response = await fetch("http://localhost:3000/api/products", {
         method: "POST",
         headers: {
