@@ -39,7 +39,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md w-full h-full min-h-screen">
+    <div className="p-6 bg-white rounded-lg w-full h-full min-h-screen">
       <h2 className="text-lg font-semibold mb-4">Order summary</h2>
       {billedItems.map(
         (item, index) => (

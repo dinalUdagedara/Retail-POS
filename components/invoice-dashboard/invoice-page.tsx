@@ -63,7 +63,7 @@ const InvoicePage = () => {
   return (
     <div>
       <div className="flex flex-row justify-between w-full h-full ">
-        <div className="hidden w-full sm:flex justify-center">
+        <div className=" w-full sm:flex justify-center">
           {itemSelected ? (
             <Confirmation />
           ) : (
@@ -71,7 +71,7 @@ const InvoicePage = () => {
           )}
         </div>
 
-        <div className="w-screen h-full sm:w-2/3 mt-10 sm:mt-0 flex justify-center border-2">
+        <div className="w-screen h-full sm:w-2/3 mt-10 sm:mt-0 flex justify-center ">
           <Bill onConfirm={handleConfirmOrder} />
         </div>
       </div>
