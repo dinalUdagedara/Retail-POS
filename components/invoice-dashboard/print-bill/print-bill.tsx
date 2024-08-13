@@ -53,7 +53,7 @@ const PrintBill = () => {
                   )}
 
                   <p className="text-sm font-medium">
-                    Rs. {item.price.toFixed(2)}
+                    Rs. {item.price}
                   </p>
 
                   <p className="text-sm font-medium">x {item.quantity}</p>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useStore } from "@/store/state";
 import Item from "antd/es/list/Item";
+import { Button } from "@/components/ui/button";
 
 interface OrderSummaryProps {
   onConfirm: () => void;
@@ -11,7 +12,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
   const billedItems = useStore((state) => state.billedItems);
   const setTotal = useStore((state) => state.setTotal);
   const removeBilledItem = useStore((state) => state.removeBilledItem);
-
+  const setShowBill = useStore((state) => state.setShowBill);
   let subtotal = 0;
   let total = 0;
   let discount = 0.1;
@@ -59,8 +60,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
                 height={100}
               />
               <div className="flex-1 ml-4">
-
-                <h3 className="text-sm font-medium">{item.brandName} {item.name}</h3>
+                <h3 className="text-sm font-medium">
+                  {item.brandName} {item.name}
+                </h3>
 
                 {item.isWeighting ? (
                   <>
@@ -126,13 +128,25 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
           <span>Rs. {total.toFixed(2)}</span>
         </div>
       </div>
-      <button
+      <Button
         // onClick={onConfirm}
         onClick={handlePrint}
         className="w-full mt-6 py-3 bg-slate-700 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         Print Bill
-      </button>
+      </Button>
+      <div
+       className="flex sm:hidden justify-end"> 
+        <Button
+          // onClick={onConfirm}
+          onClick={() => {
+            setShowBill(false);
+          }}
+          className="w-2/6 mt-6 py-3 bg-red-800 text-white font-semibold rounded-lg shadow-md hover:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        >
+          Back
+        </Button>
+      </div>
     </div>
   );
 };
