@@ -80,7 +80,7 @@ const InvoicePage = () => {
       {showPrintBill && (
         <div className="fixed  inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-          <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
+          <div className="bg-white mx-4 sm:w-2/3 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
             <PrintBill />
             <div className="flex justify-end gap-5">
               <button
@@ -97,7 +97,7 @@ const InvoicePage = () => {
       {showCashbalance && (
         <div className="fixed  inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-          <div className="bg-white w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
+          <div className="bg-white sm:w-1/2 p-8 rounded-lg shadow-lg z-10 flex flex-col ">
             <Cashbalance />
             <div className="flex justify-end gap-4">
               <button
