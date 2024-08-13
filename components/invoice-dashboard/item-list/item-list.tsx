@@ -44,6 +44,8 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
   const [barcodeButtonTriggerd, setBarCodeButtonTriggered] = useState(false);
   const isCameraActive = useStore((state) => state.isCameraActive);
   const setIsCameraActive = useStore((state) => state.setCameraState);
+  const showBill = useStore((state)=>state.showBill)
+  const setShowBill = useStore((state)=>state.setShowBill)
 
   const [selectedProduct, setSelectedProduct] =
     useState<Product>(sampleProduct);
@@ -182,6 +184,16 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
             Search using the barcode
           </Button>
         </div>
+        <div className="flex sm:hidden justify-end ">
+        <Button
+            className=" mt-2 mr-0 bg-green-900 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/6 "
+            onClick={() => {
+              setShowBill(true)
+            }}
+          >
+            Continue
+          </Button>
+        </div>
 
         <div>
           {barcodeButtonTriggerd ? (
@@ -219,7 +231,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
           filteredItems.length > 0 ? (
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
               {filteredItems.map((product) => (
-                <div key={product.id} className="group relative">
+                <div key={product.id} className="group relative bg-black">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 min-h-60">
                     <Image
                       alt={product.imageURL}

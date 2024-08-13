@@ -85,7 +85,7 @@ useEffect(() => {
     setSelectedProduct([updatedProduct]);
   }, []);;
   return (
-    <div className=" w-full p-20 pt-2">
+    <div className=" w-full p-20 pt-2 mt-10">
       <form onSubmit={handleFormSubmit}>
         <div className="space-y-12  w-full ">
           <div className="border-b border-gray-900/10 pb-12">
@@ -141,14 +141,6 @@ useEffect(() => {
                             defaultValue="1"
                             className="w-14"
                           />
-                          <Checkbox
-                            onChange={() => {
-                              setKeyboard(!keyboard);
-                            }}
-                            checked={keyboard}
-                          >
-                            Toggle keyboard
-                          </Checkbox>
                         </Space>
                       </div>
                     </div>

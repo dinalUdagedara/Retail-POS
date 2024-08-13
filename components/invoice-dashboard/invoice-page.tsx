@@ -22,6 +22,7 @@ const InvoicePage = () => {
   const setBarCode = useStore ((state)=>state.setbarcode)
 
   const [showPrintBill, setShowPrintBill] = useState(false);
+  const showBill = useStore ((state)=>state.showBill)
 
   const handleConfirmOrder = () => {
     // Handle order confirmation logic here
@@ -62,16 +63,16 @@ const InvoicePage = () => {
 
   return (
     <div>
-      <div className="flex flex-row justify-between w-full h-full ">
-        <div className=" w-full sm:flex justify-center">
+      <div className={`flex flex-row justify-between w-full h-full `}>
+        <div className={`${showBill ? 'hidden':'flex'} w-full sm:flex justify-center`}>
           {itemSelected ? (
-            <Confirmation />
+            <Confirmation /> 
           ) : (
             <ItemList onSelection={handleConfirmItem} />
           )}
         </div>
 
-        <div className="w-screen h-full sm:w-2/3 mt-10 sm:mt-0 flex justify-center ">
+        <div className={`${showBill ? 'flex':'hidden'} w-screen h-full sm:w-2/3 mt-10 sm:mt-0 sm:flex justify-center `}>
           <Bill onConfirm={handleConfirmOrder} />
         </div>
       </div>
