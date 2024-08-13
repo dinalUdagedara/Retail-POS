@@ -4,13 +4,13 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  console.log("Pasthname",pathname)
+  console.log("Pasthname", pathname);
   return (
-    
     <header className="bg-slate-200">
       <nav
         aria-label="Global"
@@ -63,27 +63,27 @@ export default function Header() {
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="mt-6 flow-root">
+        <DialogPanel className="w-2/3 fixed inset-y-0 right-0 z-10  overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="mt-6 flow-root ">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <Link
-                  href="#"
+                  href="/invoice"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Products
+                  Invoice
                 </Link>
                 <Link
-                  href="#"
+                   href={"/addNewProduct"}
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Features
+                 Add to System
                 </Link>
                 <Link
-                  href="#"
+                  href="/stock"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Marketplace
+                 Stock
                 </Link>
                 <Link
                   href="#"
@@ -94,11 +94,22 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <Link
-                  href="#"
+                    href="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </Link>
+                <div
+                className="flex justify-end">
+
+                </div>
+                <Button
+                onClick={()=>{
+                  setMobileMenuOpen(false)
+                }}
+                >
+                  Close
+                </Button>
               </div>
             </div>
           </div>
