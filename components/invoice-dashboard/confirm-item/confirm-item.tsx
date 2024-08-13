@@ -15,7 +15,7 @@ const Confirmation = () => {
   const selectedItem = useStore((state) => state.selectedItem);
   const setBilledItems = useStore((state) => state.setBilledItems);
   const setItemSelected = useStore((state) => state.setItemSelected);
-
+  const itemSelected = useStore((state)=>state.itemSelected)
  // Memoize updatedProduct
  const updatedProduct = useMemo(() => {
   const product = { ...selectedProduct[0] };
@@ -212,6 +212,11 @@ useEffect(() => {
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
+          onClick={
+            ()=>{
+                setItemSelected(false)
+            }
+          }
             type="button"
             className="text-sm font-semibold leading-6 text-gray-900"
           >

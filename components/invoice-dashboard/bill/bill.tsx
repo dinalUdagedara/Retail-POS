@@ -136,7 +136,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ onConfirm }) => {
         Print Bill
       </Button>
       <div
-       className="flex justify-end"> 
+       className="flex sm:hidden justify-end"> 
         <Button
           // onClick={onConfirm}
           onClick={() => {

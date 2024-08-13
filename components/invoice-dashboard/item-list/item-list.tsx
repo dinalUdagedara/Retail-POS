@@ -44,8 +44,8 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
   const [barcodeButtonTriggerd, setBarCodeButtonTriggered] = useState(false);
   const isCameraActive = useStore((state) => state.isCameraActive);
   const setIsCameraActive = useStore((state) => state.setCameraState);
-  const showBill = useStore((state)=>state.showBill)
-  const setShowBill = useStore((state)=>state.setShowBill)
+  const showBill = useStore((state) => state.showBill);
+  const setShowBill = useStore((state) => state.setShowBill);
 
   const [selectedProduct, setSelectedProduct] =
     useState<Product>(sampleProduct);
@@ -103,7 +103,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
 
   const toggleScanning = () => {
     setIsActive(!isActive);
-    setIsCameraActive(!isCameraActive)
+    setIsCameraActive(!isCameraActive);
     console.log("is active", isActive);
     console.log("isCameraActive", isCameraActive);
   };
@@ -118,7 +118,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
       }
       alert(text);
       setIsActive(false);
-      setIsCameraActive(false)
+      setIsCameraActive(false);
     }
   };
 
@@ -140,7 +140,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
     handleSearchItemsByBarcode(barCode);
     setBarCodeButtonTriggered(false);
     setIsActive(false);
-    setIsCameraActive(false)
+    setIsCameraActive(false);
   }
 
   //useEffect to load items when a camera detetted a barcode
@@ -185,10 +185,10 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
           </Button>
         </div>
         <div className="flex sm:hidden justify-end ">
-        <Button
+          <Button
             className=" mt-2 mr-0 bg-green-900 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/6 "
             onClick={() => {
-              setShowBill(true)
+              setShowBill(true);
             }}
           >
             Continue
@@ -229,9 +229,11 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
         </div>
         {filteredItems ? (
           filteredItems.length > 0 ? (
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            <div className="w-full flex justify-center ">
+            <div className="w-2/3 sm:w-full flex flex-col justify-center  mt-6 sm:grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+             
               {filteredItems.map((product) => (
-                <div key={product.id} className="group relative bg-black">
+                <div key={product.id} className="group relative">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 min-h-60">
                     <Image
                       alt={product.imageURL}
@@ -266,6 +268,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
                 </div>
               ))}
             </div>
+            </div>
           ) : (
             <div className="mt-6 gap-x-6 gap-y-10 flex justify-center w-full flex-col text-center items-center ">
               <p>Sorry There are No Such Items</p>
@@ -278,51 +281,53 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
             </div>
           )
         ) : (
-          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {availableItems.map((product) => (
-              <div key={product.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 min-h-60">
-                  <Image
-                    alt={product.imageURL}
-                    src={product.imageURL}
-                    layout="responsive"
-                    width={1000}
-                    height={1000}
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div className="flex flex-col">
-                    <h3 className="text-sm text-gray-700">
-                      <span aria-hidden="true" className=" block" />
-                      {product.name}
-                    </h3>
-                    {product.isWeighting ? (
-                      <p className="mt-3 ml-1 text-sm text-gray-500">
-                        {product.weight}
-                      </p>
-                    ) : (
-                      <p className="mt-3 ml-1 text-sm text-gray-500">
-                        {product.size}
-                      </p>
-                    )}
-                    {/* <p className="mt-3 ml-1 text-sm text-gray-500">
+          <div className="w-full flex justify-center ">
+            <div className="w-2/3 sm:w-full flex flex-col justify-center  mt-6 sm:grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+              {availableItems.map((product) => (
+                <div key={product.id} className="group relative">
+                  <div className=" aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md  lg:aspect-none group-hover:opacity-75 min-h-60">
+                    <Image
+                      alt={product.imageURL}
+                      src={product.imageURL}
+                      layout="responsive"
+                      width={1000}
+                      height={1000}
+                    />
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    <div className="flex flex-col">
+                      <h3 className="text-sm text-gray-700">
+                        <span aria-hidden="true" className=" block" />
+                        {product.name}
+                      </h3>
+                      {product.isWeighting ? (
+                        <p className="mt-3 ml-1 text-sm text-gray-500">
+                          {product.weight}
+                        </p>
+                      ) : (
+                        <p className="mt-3 ml-1 text-sm text-gray-500">
+                          {product.size}
+                        </p>
+                      )}
+                      {/* <p className="mt-3 ml-1 text-sm text-gray-500">
                       {product.size}
                     </p> */}
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <p className="text-sm font-medium text-gray-900">
-                      Rs. {product.price.toFixed(2)}
-                    </p>
-                    <button
-                      onClick={() => handleSelectingItem(product)}
-                      className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700 w-2/3 "
-                    >
-                      Add
-                    </button>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <p className="text-sm font-medium text-gray-900">
+                        Rs. {product.price.toFixed(2)}
+                      </p>
+                      <button
+                        onClick={() => handleSelectingItem(product)}
+                        className="mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700 w-2/3 "
+                      >
+                        Add
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>
