@@ -42,15 +42,14 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
             BarcodeReader.license = license;
           }
           BarcodeReader.engineResourcePath = engineResourcePath;
-          console.log("line 45 reached");
         }
         reader.current = await BarcodeReader.createInstance();
         enhancer.current = await CameraEnhancer.createInstance();
-        console.log("line 49 reached");
+ 
         if (container.current) {
           await enhancer.current.setUIElement(container.current);
         }
-        console.log("line 53 reached");
+
         enhancer.current.on("played", (playCallbackInfo: PlayCallbackInfo) => {
           console.log("Camera played:", playCallbackInfo);
           if (props.onPlayed) {
@@ -133,6 +132,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
 
   const stopScanning = () => {
     console.log("Stopping scanning...");
+    enhancer.current?.close();
     setIsCameraActive(false)
     clearInterval(interval.current);
   };
@@ -140,7 +140,7 @@ const BarcodeScanner = (props: ScannerProps): React.ReactElement => {
   return (
     <div
       ref={container}
-      className="relative w-full h-screen border-2 border-red-500"
+      className="relative w-full h-screen border-2"
     >
       <div className="dce-video-container absolute inset-0 w-full h-full border-2 border-blue-500"></div>
       {props.children}
