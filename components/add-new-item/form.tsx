@@ -40,6 +40,7 @@ export default function Form(
   const isCameraActive = useStore((state) => state.isCameraActive);
   const setIsCameraActive = useStore((state) => state.setCameraState);
   const [barcodeButtonTriggerd, setBarCodeButtonTriggered] = useState(false);
+  const [manualBarCode, setManualBarCode] = useState(false)
 
   const handleIsCheckBoxChange = (e: any) => {
     setIsWeightable(e.target.checked);
@@ -314,17 +315,31 @@ export default function Form(
                   Bar Code : {barCode}
                 </label>
                 <div className="mt-2">
-                  <div className="flex justify-center">
+                  <div className="flex justify-center gap-5">
                     <Button
                       className={`${
                         barCode ? "hidden" : ""
                       } mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/3 `}
                       onClick={() => {
                         setBarCodeButtonTriggered(true);
+                        setManualBarCode(false)
                       }}
              
                     >
                      Scan the Barcode
+                    </Button>
+
+                    <Button
+                      className={`${
+                        barCode ? "hidden" : ""
+                      } mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/3 `}
+                      onClick={() => {
+                        setManualBarCode(true)
+                        setBarCodeButtonTriggered(false);
+                      }}
+             
+                    >
+                     Enter the Barcode
                     </Button>
 
                     <Button
@@ -374,7 +389,7 @@ export default function Form(
                     <></>
                   )}
 
-                  {/* <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <div className={`${manualBarCode? 'flex':'hidden'} my-4 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md`}>
                     <input
                       id="barCode"
                       name="barCode"
@@ -383,7 +398,7 @@ export default function Form(
                       autoComplete="barCode"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
