@@ -10,7 +10,7 @@ import { TextResult } from "dynamsoft-javascript-barcode";
 import React from "react";
 import { Button } from "antd";
 
-interface Product {
+export interface Product {
   id: string;
   brandName: string;
   name: string;

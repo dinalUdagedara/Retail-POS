@@ -1,7 +1,12 @@
 "use client";
+import { useStore } from "@/store/state";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import React from "react";
 import { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import BarcodeScanner from "@/components/invoice-dashboard/barcode-scanner/barcode-scanner";
+import { TextResult } from "dynamsoft-javascript-barcode";
+import { Button } from "../ui/button";
 
 interface Item {
   id: string;
@@ -16,12 +21,26 @@ interface Item {
   barCode: string;
 }
 
-export default function Form({
-  onSubmit,
-}: {
-  onSubmit: (productData: Item) => void;
-}) {
+export async function BarCodeScanner() {
+  let license: string | undefined = process.env.DBRLicense;
+  return { props: { license: license } };
+}
+
+export default function Form(
+  {
+    onSubmit,
+  }: {
+    onSubmit: (productData: Item) => void;
+  },
+  props: any
+) {
   const [isWeightable, setIsWeightable] = useState(false);
+  const barCode = useStore((state) => state.barCode);
+  const setBarCode = useStore((state) => state.setbarcode);
+  const isCameraActive = useStore((state) => state.isCameraActive);
+  const setIsCameraActive = useStore((state) => state.setCameraState);
+  const [barcodeButtonTriggerd, setBarCodeButtonTriggered] = useState(false);
+  const [manualBarCode, setManualBarCode] = useState(false)
 
   const handleIsCheckBoxChange = (e: any) => {
     setIsWeightable(e.target.checked);
@@ -42,8 +61,10 @@ export default function Form({
       quantity: Number(formData.get("quantity")),
       imageURL: formData.get("imgURL")?.toString() || "",
       isWeighting: formData.get("isWeightable") === "true",
-      barCode: formData.get("barCode")?.toString() || " ",
+      barCode: formData.get("barCode")?.toString() || barCode || " ",
     };
+
+    console.log(product)
 
     // Validation (Optional)
     if (
@@ -60,8 +81,31 @@ export default function Form({
 
     // Call the prop function with product object
     onSubmit(product);
- 
   }
+
+  const [isActive, setIsActive] = React.useState(false);
+  const [initialized, setInitialized] = React.useState(false);
+
+  const toggleScanning = () => {
+    setIsActive(!isActive);
+    setIsCameraActive(!isCameraActive);
+    console.log("is active", isActive);
+    console.log("isCameraActive", isCameraActive);
+  };
+
+  const onScanned = (results: TextResult[]) => {
+    if (results.length > 0) {
+      let text = "";
+      for (let index = 0; index < results.length; index++) {
+        const result = results[index];
+        text =
+          text + result.barcodeFormatString + ": " + result.barcodeText + "\n";
+      }
+      alert(text);
+      setIsActive(false);
+      setIsCameraActive(false);
+    }
+  };
 
   return (
     <div className="w-full flex justify-center ">
@@ -263,29 +307,100 @@ export default function Form({
                 </div>
               </div>
 
-
               <div className="sm:col-span-4">
                 <label
                   htmlFor="barCode"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Bar Code
+                  Bar Code : {barCode}
                 </label>
                 <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <div className="flex justify-center gap-5">
+                    <Button
+                      className={`${
+                        barCode ? "hidden" : ""
+                      } mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/3 `}
+                      onClick={() => {
+                        setBarCodeButtonTriggered(true);
+                        setManualBarCode(false)
+                      }}
+             
+                    >
+                     Scan the Barcode
+                    </Button>
+
+                    <Button
+                      className={`${
+                        barCode ? "hidden" : ""
+                      } mt-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded-lg hover:bg-blue-700 w-2/3 `}
+                      onClick={() => {
+                        setManualBarCode(true)
+                        setBarCodeButtonTriggered(false);
+                      }}
+             
+                    >
+                     Enter the Barcode
+                    </Button>
+
+                    <Button
+                      className={`${
+                        barCode ? "flex" : "hidden"
+                      } my-2 mr-0 bg-red-500 text-white py-1 px-2 rounded-lg hover:bg-blue-700  `}
+                      onClick={() => {
+                        setBarCode(null);
+                      }}
+                    >
+                      Change barcode
+                    </Button>
+                  </div>
+
+                  {barcodeButtonTriggerd && !barCode ? (
+                    <>
+                      <div>
+                        <div>
+                          {initialized ? (
+                            <div className="flex justify-center">
+                              <button
+                                className="m-2 mr-0 bg-slate-700 text-white py-1 px-2 rounded hover:bg-blue-700  "
+                                onClick={toggleScanning}
+                              >
+                                {isCameraActive
+                                  ? "Stop Scanning"
+                                  : "Start Scanning"}
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex justify-center">
+                              <div>Initializing...</div>
+                            </div>
+                          )}
+                          <div>
+                            <BarcodeScanner
+                              license={props.license}
+                              onInitialized={() => setInitialized(true)}
+                              isActive={isCameraActive}
+                              onScanned={(results) => onScanned(results)}
+                            ></BarcodeScanner>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  <div className={`${manualBarCode? 'flex':'hidden'} my-4 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md`}>
                     <input
                       id="barCode"
                       name="barCode"
                       type="text"
-                      placeholder="Enter the Image URL in here"
+                      placeholder="Enter the Barcode"
                       autoComplete="barCode"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
               </div>
-
-
 
               <div className="col-span-full ">
                 <label
@@ -334,9 +449,9 @@ export default function Form({
           </button>
           <button
             type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Save
+            Add
           </button>
         </div>
       </form>
