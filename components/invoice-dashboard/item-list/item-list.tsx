@@ -104,7 +104,7 @@ export default function ItemList({ onSelection }: ItemListProps, props: any) {
   const toggleScanning = () => {
     setIsActive(!isActive);
     setIsCameraActive(!isCameraActive);
-    console.log("is active", isActive);
+    console.log("is  active", isActive);
     console.log("isCameraActive", isCameraActive);
   };
 
